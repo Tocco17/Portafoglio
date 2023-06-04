@@ -1,12 +1,19 @@
-﻿namespace portafoglio.api.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
 
-public class DebtPayment : IEntity
+namespace portafoglio.api.Entities;
+
+[PrimaryKey(nameof(Id))]
+[Index(nameof(IdTransaction), nameof(IdDebt), IsUnique = true)]
+public class DebtPayment : ILogicDelete
 {
 	public int Id {get; set;}
 
 	public int IdTransaction { get; set; }
-	public Transaction? Transaction { get; set; } = null;
+	[ForeignKey(nameof(IdTransaction))] public Transaction? Transaction { get; set; } = null;
 
 	public int IdDebt { get; set; }
-	public Debt? Debt { get; set; } = null;
+	[ForeignKey(nameof(IdDebt))] public Debt? Debt { get; set; } = null;
+
+	public bool Active {get; set;}
 }

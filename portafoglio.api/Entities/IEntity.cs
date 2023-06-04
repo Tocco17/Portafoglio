@@ -1,4 +1,6 @@
-﻿namespace portafoglio.api.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace portafoglio.api.Entities;
 
 public interface IEntity
 {

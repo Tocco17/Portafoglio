@@ -1,2 +1,5 @@
 ﻿portafoglio.api/.vs
 portafoglio.api/obj
+portafoglio.api/Migrations
+portafoglio.api/bin
+*.db

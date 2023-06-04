@@ -1,12 +1,19 @@
-﻿namespace portafoglio.api.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
 
-public class CreditPayment : IEntity
+namespace portafoglio.api.Entities;
+
+[PrimaryKey(nameof(Id))]
+[Index(nameof(IdTransaction), nameof(IdCredit), IsUnique = true)]
+public class CreditPayment : ILogicDelete
 {
 	public int Id {get;set;}
 
 	public int IdTransaction { get; set; }
-	public Transaction? Transaction { get; set; } = null;
+	[ForeignKey(nameof(IdTransaction))] public Transaction? Transaction { get; set; } = null;
 
 	public int IdCredit { get; set; }
-	public Credit? Credit { get; set; }
+	[ForeignKey(nameof(IdCredit))] public Credit? Credit { get; set; }
+
+	public bool Active {get; set; }
 }

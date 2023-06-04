@@ -1,29 +1,20 @@
-﻿namespace portafoglio.api.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
 
-public class Label : IEntity, ILogicDelete
+namespace portafoglio.api.Entities;
+
+[PrimaryKey(nameof(Id))]
+[Index(nameof(IdUser), nameof(Name), IsUnique = true)]
+public class Label : ILogicDelete
 {
 	public int Id {get; set;}
 	public bool Active { get; set; }
 
-	/// <summary>
-	/// User id this label belongs to
-	/// </summary>
 	public int IdUser { get; set; }
+	[ForeignKey(nameof(IdUser))] public User? User { get; set; }
 
-	/// <summary>
-	/// User this label belongs to
-	/// </summary>
-	public User? User { get; set; }
-
-	/// <summary>
-	/// Id of the its father label
-	/// </summary>
 	public int? IdFatherLabel { get; set; } = null;
-
-	/// <summary>
-	/// Its father label
-	/// </summary>
-	public Label? FatherLabel { get; set; } = null;
+	[ForeignKey(nameof(IdFatherLabel))] public Label? FatherLabel { get; set; } = null;
 
 	public string Name { get; set; } = null!;
 	public string? Description { get; set; } = null;
