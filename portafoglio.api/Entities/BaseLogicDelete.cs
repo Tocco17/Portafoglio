@@ -1,6 +1,6 @@
 ﻿namespace portafoglio.api.Entities;
 
-public interface ILogicDelete: IEntity
+public class BaseLogicDelete: BaseEntity
 {
 	/// <summary>
 	/// Check if it's active or not

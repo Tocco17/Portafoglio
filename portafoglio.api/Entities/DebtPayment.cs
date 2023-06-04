@@ -5,7 +5,7 @@ namespace portafoglio.api.Entities;
 
 [PrimaryKey(nameof(Id))]
 [Index(nameof(IdTransaction), nameof(IdDebt), IsUnique = true)]
-public class DebtPayment : ILogicDelete
+public class DebtPayment : BaseLogicDelete
 {
 	public int Id {get; set;}
 

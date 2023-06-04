@@ -5,7 +5,7 @@ namespace portafoglio.api.Entities;
 
 [PrimaryKey(nameof(Id))]
 [Index(nameof(IdPortafoglioFrom), nameof(IdPortafoglioTo), IsUnique = false)]
-public class Transfer : ILogicDelete
+public class Transfer : BaseLogicDelete
 {
 	public int Id {get; set;}
 

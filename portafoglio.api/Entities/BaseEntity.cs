@@ -2,7 +2,7 @@
 
 namespace portafoglio.api.Entities;
 
-public interface IEntity
+public class BaseEntity
 {
 	/// <summary>
 	/// Id of this entity
