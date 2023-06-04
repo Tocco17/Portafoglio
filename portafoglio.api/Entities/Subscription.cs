@@ -5,7 +5,7 @@ namespace portafoglio.api.Entities;
 
 [Index(nameof(IdUser), nameof(Name), IsUnique = true)]
 [Index(nameof(IdPortafoglio), IsUnique = false)]
-public class Subscription : BaseLogicDelete
+public class Subscription : BaseLogicDeleteEntity
 {
 	public int IdUser { get; set; }
 	[ForeignKey(nameof(IdUser))] public User? User { get; set; } = null;

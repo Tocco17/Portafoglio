@@ -5,7 +5,7 @@ namespace portafoglio.api.Entities;
 
 [Index(nameof(IdPortafoglio), IsUnique = false)]
 [Index(nameof(IdLabel), IsUnique = false)]
-public class Transaction : BaseLogicDelete
+public class Transaction : BaseLogicDeleteEntity
 {
 	public int IdPortafoglio { get; set; }
 	public Portafoglio? Portafoglio { get; set; } = null;

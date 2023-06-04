@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace portafoglio.api.Entities;
 
 [Index(nameof(IdPortafoglioFrom), nameof(IdPortafoglioTo), IsUnique = false)]
-public class Transfer : BaseLogicDelete
+public class Transfer : BaseLogicDeleteEntity
 {
 	public int IdPortafoglioFrom { get; set; }
 	[ForeignKey(nameof(IdPortafoglioFrom))] public Portafoglio? From { get; set; } = null;

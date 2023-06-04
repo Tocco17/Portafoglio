@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace portafoglio.api.Entities;
 
 [Index(nameof(IdTransaction), nameof(IdCredit), IsUnique = true)]
-public class CreditPayment : BaseLogicDelete
+public class CreditPayment : BaseLogicDeleteEntity
 {
 	public int IdTransaction { get; set; }
 	[ForeignKey(nameof(IdTransaction))] public Transaction? Transaction { get; set; } = null;
