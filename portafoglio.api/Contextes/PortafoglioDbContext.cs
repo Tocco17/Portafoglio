@@ -14,7 +14,7 @@ public class PortafoglioDbContext : DbContext
 	public DbSet<Debt> Debts { get; set; }
 	public DbSet<DebtPayment> DebtPayments { get; set; }
 	public DbSet<FrequentPayment> FrequentPayments { get; set; }
-	public DbSet<FrequentPayment_Payment> FrequentPayment_Payments { get; set; }
+	public DbSet<FrequentPaymentPayment> FrequentPayment_Payments { get; set; }
 	public DbSet<Label> Labels { get; set; }
 	public DbSet<Portafoglio> Portafoglios { get; set; }
 	public DbSet<Subscription> Subscriptions { get; set; }

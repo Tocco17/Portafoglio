@@ -2,6 +2,7 @@
 
 namespace portafoglio.api.Entities;
 
+[PrimaryKey(nameof(Id))]
 public class BaseEntity
 {
 	/// <summary>

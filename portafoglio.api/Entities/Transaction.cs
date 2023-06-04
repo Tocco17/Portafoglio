@@ -3,13 +3,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace portafoglio.api.Entities;
 
-[PrimaryKey(nameof(Id))]
 [Index(nameof(IdPortafoglio), IsUnique = false)]
 [Index(nameof(IdLabel), IsUnique = false)]
 public class Transaction : BaseLogicDelete
 {
-	public int Id {get; set;}
-
 	public int IdPortafoglio { get; set; }
 	public Portafoglio? Portafoglio { get; set; } = null;
 
@@ -21,5 +18,4 @@ public class Transaction : BaseLogicDelete
 	public int Value { get; set; }
 
 	public DateTime Date { get; set; }
-	public bool Active {get; set; }
 }
