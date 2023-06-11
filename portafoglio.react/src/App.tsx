@@ -1,10 +1,16 @@
 import React from 'react';
 import './App.css';
-import Provider from './providers/provider';
+import { RouterProvider } from 'react-router-dom';
+import router from './contextes/route.context';
+import { AuthContext, useAuth } from './contextes/auth.context';
 
-function App() {
+function App() {  
   return (
-    <Provider />
+    <>
+    <AuthContext.Provider value={useAuth()}>
+      <RouterProvider router={router} />
+    </AuthContext.Provider>
+    </>    
   );
 }
 
