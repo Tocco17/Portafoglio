@@ -3,3 +3,5 @@ portafoglio.api/obj
 portafoglio.api/Migrations
 portafoglio.api/bin
 *.db
+*.db-shm
+*.db-wal
