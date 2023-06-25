@@ -1,4 +1,4 @@
-import { createContext, ReactElement, useContext, useState } from "react";
+import { createContext, useContext } from "react";
 import User from "../models/entities/user.interface";
 
 export interface IAuth {
