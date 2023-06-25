@@ -12,13 +12,9 @@ public class UserController : LogicDeleteController<User, UserFilter>
 	}
 
 	[HttpPost("login")]
-	public async Task<ActionResult<User>> Login([FromBody] User user)
+	public async Task<ActionResult<User>> Login([FromBody] UserFilter filter)
 	{
-		var userFromDb = await _dbRepo.GetSingleByFilterAsync(new UserFilter
-		{
-			Username = user.Username,
-			Password = user.Password
-		});
+		var userFromDb = await _dbRepo.GetSingleByFilterAsync(filter);
 
 		if (userFromDb == null)
 			return NotFound("Incorrect username or password.");
