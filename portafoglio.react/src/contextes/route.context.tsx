@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import Login from "../pages/login";
+import Login, { loginSubmitAction } from "../pages/login";
 import Home from "../pages/home";
 
 const router = createBrowserRouter([
@@ -14,13 +14,28 @@ const router = createBrowserRouter([
                 path: 'auth/',
                 children: [
                     {
-                        path: 'login',
-                        element: <Login />
+                        path: 'login/',
+                        action: loginSubmitAction,
+                        element: <Login />,
+                        children: [
+                            {
+                                path: 'search',
+                                action: loginSubmitAction,
+                                errorElement: <div>Oops</div>
+                            }
+                        ],
                     }
                 ]
             }
         ]
-    }
+    },
+    
 ])
 
 export default router
+
+
+export enum route {
+    home = '/',
+    login = '/auth/login',
+}
