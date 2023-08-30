@@ -1,7 +1,7 @@
 import { Box, Button, FormControl, TextField } from "@mui/material"
 import { ActionFunctionArgs, Form, redirect } from "react-router-dom"
 import { route } from "../../contextes/route.context"
-import postUserLogin from "../../api/user/user.login.post"
+import { createUser, loginUser } from "../../api/controllers/user-controller"
 
 const Login = () => {
     const handleSubmitBox = (event: React.FormEvent<HTMLFormElement>) => {
@@ -50,7 +50,7 @@ export const loginSubmitAction = async ({params}: ActionFunctionArgs) => {
 
     if(!username || !password) throw new Error('username or password not inserted.')
 
-    const user = await postUserLogin({username: username, password: password})
+    const user = await loginUser(username, password)
 
     if(!user) throw new Error('User not found.')    
     
