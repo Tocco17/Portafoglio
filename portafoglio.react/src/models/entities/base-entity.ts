@@ -1,5 +1,5 @@
 export interface BaseEntity {
-    id: number
+    id?: number
 }
 
 export interface LogicDeleteEntity extends BaseEntity {
