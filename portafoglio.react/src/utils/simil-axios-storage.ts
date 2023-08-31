@@ -11,8 +11,8 @@ export enum DatabaseKey {
 }
 
 export const getMaxId = (database: DatabaseKey) => {
-	const datas = readFromStorage<BaseEntity[]>(database) as BaseEntity[]
-	const ids = datas.map(d => d.id).filter(id => !!id) as number[] | undefined
+	const datas = readFromStorage<BaseEntity[]>(database) as BaseEntity[] | undefined
+	const ids = datas?.map(d => d.id).filter(id => !!id) as number[] | undefined
 
 	if(!ids) return undefined
 	
@@ -39,7 +39,7 @@ export const insertNewData = (database: DatabaseKey, data: BaseEntity) => {
 export const insertNewDataList = (database: DatabaseKey, data: BaseEntity[]) => {
 	const datas = readFromStorage<BaseEntity[]>(database) as BaseEntity[] | undefined
 	const newId = getNewId(database)
-
+	
 	const datasToAdd: BaseEntity[] = data.map((d, i) => ({...d, id: newId + i}))
 	const datasToInsert: BaseEntity[] = (!datas || !datas.length) ? [...datasToAdd] : [...datas, ...datasToAdd]
 

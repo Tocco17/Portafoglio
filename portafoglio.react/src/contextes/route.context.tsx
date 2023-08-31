@@ -1,6 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
 import Login, { loginSubmitAction } from "../pages/login";
 import Home from "../pages/home";
+import { element } from "prop-types";
+import { DefineDb, defineDbLoader } from "../pages/define-db";
 
 const router = createBrowserRouter([
     {
@@ -10,6 +12,11 @@ const router = createBrowserRouter([
                 index: true,
                 element: <Home />
             },
+			{
+				path: 'define-db',
+				element: <DefineDb />,
+				loader: defineDbLoader,
+			},
             {
                 path: 'auth/',
                 children: [
@@ -26,7 +33,7 @@ const router = createBrowserRouter([
                         ],
                     }
                 ]
-            }
+            },
         ]
     },
     
