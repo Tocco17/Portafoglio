@@ -35,3 +35,14 @@ export const insertNewData = (database: DatabaseKey, data: BaseEntity) => {
 	writeToStorage(database, datasToInsert)
 	return dataToInsert
 }
+
+export const insertNewDataList = (database: DatabaseKey, data: BaseEntity[]) => {
+	const datas = readFromStorage<BaseEntity[]>(database) as BaseEntity[] | undefined
+	const newId = getNewId(database)
+
+	const datasToAdd: BaseEntity[] = data.map((d, i) => ({...d, id: newId + i}))
+	const datasToInsert: BaseEntity[] = (!datas || !datas.length) ? [...datasToAdd] : [...datas, ...datasToAdd]
+
+	writeToStorage(database, datasToInsert)
+	return datasToAdd
+}
