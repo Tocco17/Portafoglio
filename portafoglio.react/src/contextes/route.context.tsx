@@ -1,7 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
-import Login, { loginSubmitAction } from "../pages/login";
+import { Login, loginSubmitAction } from "../pages/login";
 import Home from "../pages/home";
-import { element } from "prop-types";
 import { DefineDb, defineDbLoader } from "../pages/define-db";
 import RequireAuth from "../components/auth/require-auth";
 import { SeeDb, seeDbLoader } from "../pages/see-db";
@@ -27,13 +26,6 @@ const router = createBrowserRouter([
 						path: 'login/',
 						action: loginSubmitAction,
 						element: <Login />,
-						children: [
-							{
-								path: 'search',
-								action: loginSubmitAction,
-								errorElement: <div>Oops</div>
-							}
-						],
 					}
 				]
 			},
