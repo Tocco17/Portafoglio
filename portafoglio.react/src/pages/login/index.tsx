@@ -27,15 +27,12 @@ export const Login = () => {
 	)
 }
 
-export const loginSubmitAction = async ({ params, request }: ActionFunctionArgs) => {
-	console.log('submit action')
-
-	const { username, password } = params
+export const loginSubmitAction = async ({request}: ActionFunctionArgs) => {
 	let formData = await request.formData()
-	console.log(params)
-	console.log(request)
-	console.log(formData)
 
+	const username = formData.get("username") as string
+	const password = formData.get("password") as string
+	
 	if (!username || !password) throw new Error('username or password not inserted.')
 
 	const user = await loginUser(username, password)
