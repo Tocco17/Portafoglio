@@ -1,4 +1,4 @@
-import { Button, FormControl, Input, InputLabel, } from "@mui/material"
+import { Box, Button, FormControl, Input, InputLabel, } from "@mui/material"
 import { ActionFunctionArgs, Form, redirect } from "react-router-dom"
 import { route } from "../../contextes/route.context"
 import { loginUser } from "../../api/controllers/user-controller"
@@ -11,28 +11,39 @@ export const Login = () => {
 			<h1>Login</h1>
 
 			<Form method="post">
-				<FormControl>
-					<InputLabel htmlFor="username-input" >Username</InputLabel>
-					<Input id="username-input" name="username"/>
-				</FormControl>
+				<Box sx={{
+					display: 'flex',
+					flexDirection: "column",
+					alignItems: 'start',
+					justifyContent: 'center',
+					width: '100vw',
+					height: '100%',
+					gap: '50px',
+					marginLeft: '50px',
+				}}>
+					<FormControl>
+						<InputLabel htmlFor="username-input" >Username</InputLabel>
+						<Input id="username-input" name="username" />
+					</FormControl>
 
-				<FormControl>
-					<InputLabel htmlFor="password-input">Password</InputLabel>
-					<Input id="password-input" name="password"/>
-				</FormControl>
+					<FormControl>
+						<InputLabel htmlFor="password-input">Password</InputLabel>
+						<Input id="password-input" name="password" />
+					</FormControl>
 
-				<Button type="submit">Login</Button>
+					<Button type="submit">Login</Button>
+				</Box>
 			</Form>
 		</>
 	)
 }
 
-export const loginSubmitAction = async ({request}: ActionFunctionArgs) => {
+export const loginSubmitAction = async ({ request }: ActionFunctionArgs) => {
 	let formData = await request.formData()
 
 	const username = formData.get("username") as string
 	const password = formData.get("password") as string
-	
+
 	if (!username || !password) throw new Error('username or password not inserted.')
 
 	const user = await loginUser(username, password)
