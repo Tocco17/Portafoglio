@@ -5,6 +5,7 @@ import { DefineDb, defineDbLoader } from "../pages/define-db";
 import RequireAuth from "../components/auth/require-auth";
 import { SeeDb, seeDbLoader } from "../pages/see-db";
 import { Wallets, walletsLoader } from "../pages/wallets";
+import { WalletPage } from "../pages/wallets/idWallet";
 
 const router = createBrowserRouter([
 	{
