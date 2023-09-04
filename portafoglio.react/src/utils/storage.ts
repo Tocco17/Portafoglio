@@ -1,5 +1,9 @@
 import { decode, encode } from "./serialize"
 
+export enum StorageKey {
+	auth = 'auth',
+}
+
 export const writeToStorage = (key: string, object: any) => {
 	const stringified = JSON.stringify(object)
 	const encoded = encode(stringified)
