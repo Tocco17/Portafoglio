@@ -1,4 +1,4 @@
-import { Form, LoaderFunctionArgs, Route, redirect, useLoaderData } from "react-router-dom"
+import { Form, Link, LoaderFunctionArgs, Route, redirect, useLoaderData } from "react-router-dom"
 import { route } from "../../../contextes/route.context"
 import { getWallet } from "../../../api/controllers/wallet-controller"
 import { Wallet } from "../../../models/entities/wallet"
@@ -44,6 +44,16 @@ export const WalletPage = () => {
 				}}>
 					<div>{wallet?.name}</div>
 					<div>{wallet?.description}</div>
+				</Box>
+
+				<Box sx={{
+					display: 'flex',
+					flexDirection: 'row',
+					justifyContent: 'start',
+					alignItems: 'center',
+					gap: '10px',
+				}}>
+					<Link to={'edit'}>Edit</Link>
 				</Box>
 			</Box>
 		</>

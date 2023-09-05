@@ -7,6 +7,7 @@ import { SeeDb, seeDbLoader } from "../pages/see-db";
 import { Wallets, walletsLoader } from "../pages/wallets";
 import { WalletPage, walletPageLoader } from "../pages/wallets/idWallet";
 import { NewWalletPage, newWalletPageAction } from "../pages/wallets/new";
+import { EditWallet, editWalletLoader } from "../pages/wallets/idWallet/edit";
 
 const router = createBrowserRouter([
 	{
@@ -48,6 +49,11 @@ const router = createBrowserRouter([
 								path: ':idWallet/',
 								element: <WalletPage />,
 								loader: walletPageLoader,
+							},
+							{
+								path: ':idWallet/edit/',
+								element: <EditWallet />,
+								loader: editWalletLoader,
 							},
 							{
 								path: 'new/',
