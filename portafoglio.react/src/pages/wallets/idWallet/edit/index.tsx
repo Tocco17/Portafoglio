@@ -18,6 +18,7 @@ export const editWalletLoader = async ({ params }: LoaderFunctionArgs) => {
 
 export const EditWallet = () => {
 	const wallet = useLoaderData() as Wallet
+	
 	return (
 		<>
 			<Box sx={{
@@ -55,7 +56,7 @@ export const EditWallet = () => {
 							<Input id="description-edit-input" name="description" defaultValue={wallet.description} />
 						</FormControl>
 
-						<Input hidden disabled name="id" defaultValue={wallet.id} sx={{display: 'none'}} />
+						<Input name="id" defaultValue={wallet.id} sx={{display: 'none'}}/>
 
 						<Button type="submit">Edit</Button>
 					</Box>
@@ -66,8 +67,6 @@ export const EditWallet = () => {
 }
 
 export const editWalletAction = async ({ request }: ActionFunctionArgs) => {
-	console.log('prova')
-	
 	const formData = await request.formData()
 
 	const name = formData.get("name") as string
@@ -76,9 +75,7 @@ export const editWalletAction = async ({ request }: ActionFunctionArgs) => {
 
 	const apiRequest: EditWalletRequest = {id, name, description}
 
-	console.log(apiRequest)
-	
-	const result = await editWallet(apiRequest)
+	await editWallet(apiRequest)
 
 	return redirect(`${route.wallets}/${id}`)
 }
