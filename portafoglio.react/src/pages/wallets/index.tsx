@@ -34,7 +34,6 @@ export const Wallets = () => {
 				justifyContent: 'center',
 			}}>
 				<Box sx={{
-					width: 'calc(100%/3)',
 					height: 'inherit',
 					display: 'flex',
 					flexDirection: 'column',
@@ -63,18 +62,6 @@ export const Wallets = () => {
 							</li>
 						))}
 					</nav>
-
-					{/* <ul>
-						{wallets.map((wallet, index) => (
-							<li key={`wallet-${index}`}>
-								<Link to={`${wallet.id ?? '/'}`}>{wallet.name}</Link>
-							</li>
-							// <Form key={`wallet-${index}`} action={`${wallet.id ?? '/'}`}>
-							// 	<Button type="submit">{wallet.name}</Button>
-							// 	<li key={`wallet-${index}`}>{wallet.name}</li> 
-							// </Form>
-						))}
-					</ul> */}
 				</Box>
 
 				<Outlet />

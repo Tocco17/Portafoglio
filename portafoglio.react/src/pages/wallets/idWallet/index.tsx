@@ -1,8 +1,9 @@
-import { Form, LoaderFunctionArgs, redirect, useLoaderData } from "react-router-dom"
+import { Form, LoaderFunctionArgs, Route, redirect, useLoaderData } from "react-router-dom"
 import { route } from "../../../contextes/route.context"
 import { getWallet } from "../../../api/controllers/wallet-controller"
 import { Wallet } from "../../../models/entities/wallet"
 import { Box, Button } from "@mui/material"
+import { Close } from "../../../components/elements/close"
 
 export const walletPageLoader = async ({ params }: LoaderFunctionArgs) => {
 	const idWallet = params.idWallet as number | undefined
@@ -20,14 +21,18 @@ export const WalletPage = () => {
 	return (
 		<>
 			<Box sx={{
+				flexGrow: 1,
+				
 				display: 'flex',
 				flexDirection: 'column',
 				justifyContent: 'start',
 				gap: '50px',
 			}}>
-				<Form action={route.wallets}>
-					<Button type="submit">X</Button>
-				</Form>
+				<Box sx={{
+					alignSelf: 'end'
+				}}>
+					<Close action={route.wallets} />
+				</Box>
 				
 				<h1>Wallet page</h1>
 
