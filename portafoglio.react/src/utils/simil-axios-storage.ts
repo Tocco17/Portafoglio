@@ -46,3 +46,13 @@ export const insertNewDataList = (database: DatabaseKey, data: BaseEntity[]) => 
 	writeToStorage(database, datasToInsert)
 	return datasToAdd
 }
+
+export const getById = (database: DatabaseKey, id: number) => {
+	const datas = readFromStorage<BaseEntity[]>(database) as BaseEntity[] | undefined
+
+	if(!datas) return undefined
+	
+	const data = datas.find(d => d.id == id)
+	
+	return data
+}
