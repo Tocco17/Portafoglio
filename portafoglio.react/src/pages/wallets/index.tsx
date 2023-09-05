@@ -1,15 +1,27 @@
-import { Form, Outlet, useLoaderData } from "react-router-dom"
+import { Form, Link, LoaderFunctionArgs, NavLink, Outlet, useLoaderData } from "react-router-dom"
 import { getWallets } from "../../api/controllers/wallet-controller"
 import { Wallet } from "../../models/entities/wallet"
-import { Box, Button } from "@mui/material"
+import { Box, Button, Input, InputLabel } from "@mui/material"
 
-export const walletsLoader = async () => {
-	const wallets = await getWallets()
-	return wallets
+interface WalletLoaderData {
+	wallets: Wallet[] | undefined
+	q: string | undefined
+}
+
+export const walletsLoader = async ({ request }: LoaderFunctionArgs) => {
+	const url = new URL(request.url)
+	const q = url.searchParams.get("q") as string | undefined
+	const wallets = await getWallets({name: q})
+
+	const walletLoaderData: WalletLoaderData = {
+		wallets,
+		q
+	}
+	return walletLoaderData
 }
 
 export const Wallets = () => {
-	const wallets = useLoaderData() as Wallet[]
+	const {wallets, q} = useLoaderData() as WalletLoaderData
 
 	return (
 		<>
@@ -25,25 +37,44 @@ export const Wallets = () => {
 					width: 'calc(100%/3)',
 					height: 'inherit',
 					display: 'flex',
-					flexDirection: 'column'
+					flexDirection: 'column',
+					alignItems: 'center',
 				}}>
 					<Box sx={{
-						width: 'inherit',
+						width: '100%',
 						display: 'flex',
 						flexDirection: 'row',
+						justifyContent: 'space-between',
 					}}>
-						<Box>Prova box</Box>
+						<Form role="search">
+							<InputLabel htmlFor="search-wallet-input" >Search</InputLabel>
+							<Input id="search-wallet-input" type="search" name="q" defaultValue={q} />
+						</Form>
 
 						<Form action="new">
 							<Button type="submit">New</Button>
 						</Form>
 					</Box>
 
-					<ul>
-						{wallets.map((wallet, index) => (
-							<li key={`wallet-${index}`}>{wallet.name}</li>
+					<nav>
+						{wallets?.map((wallet, index) => (
+							<li key={`wallet-${index}-${wallet.name}`}>
+								<NavLink to={`${wallet.id ?? '/'}`}>{wallet.name}</NavLink>
+							</li>
 						))}
-					</ul>
+					</nav>
+
+					{/* <ul>
+						{wallets.map((wallet, index) => (
+							<li key={`wallet-${index}`}>
+								<Link to={`${wallet.id ?? '/'}`}>{wallet.name}</Link>
+							</li>
+							// <Form key={`wallet-${index}`} action={`${wallet.id ?? '/'}`}>
+							// 	<Button type="submit">{wallet.name}</Button>
+							// 	<li key={`wallet-${index}`}>{wallet.name}</li> 
+							// </Form>
+						))}
+					</ul> */}
 				</Box>
 
 				<Outlet />

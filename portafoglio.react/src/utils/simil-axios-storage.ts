@@ -47,6 +47,20 @@ export const insertNewDataList = (database: DatabaseKey, data: BaseEntity[]) => 
 	return datasToAdd
 }
 
+export const getAll = (database: DatabaseKey) => {
+	const datas = readFromStorage<BaseEntity[]>(database) as BaseEntity[] | undefined
+	return datas
+}
+
+export const getList = (database: DatabaseKey, filterFunction?: (database: BaseEntity[]) => BaseEntity[] | undefined) => {
+	const datas = readFromStorage<BaseEntity[]>(database) as BaseEntity[] | undefined
+	if(!datas) return undefined
+	if(!filterFunction) return datas
+	
+	const dataListFiltered = filterFunction(datas)
+	return dataListFiltered
+}
+
 export const getById = (database: DatabaseKey, id: number) => {
 	const datas = readFromStorage<BaseEntity[]>(database) as BaseEntity[] | undefined
 

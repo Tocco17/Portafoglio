@@ -1,6 +1,7 @@
 import { LoggedUser } from "../../models/dtos/logged-user"
 import { Wallet } from "../../models/entities/wallet"
-import { DatabaseKey, getById, insertNewData,  } from "../../utils/simil-axios-storage"
+import { WalletFilter } from "../../models/filters/wallet.filter"
+import { DatabaseKey, getById, getList, insertNewData,  } from "../../utils/simil-axios-storage"
 import { StorageKey, readFromStorage } from "../../utils/storage"
 
 export const createWallet = async (name: string, description?: string) => {
@@ -26,9 +27,29 @@ export const createWallet = async (name: string, description?: string) => {
 	return walletCreated.id
 }
 
-export const getWallets = async () => {
+const filteredFunction = (database: Wallet[], filter?: WalletFilter) => {
+	if(!filter) return database
+
+	let dataFiltered = database.map(d => ({...d})) as Wallet[] | undefined
+
+	if(!dataFiltered) return undefined
+
+	if(!!filter.idUser) dataFiltered = dataFiltered.filter(d => d.idUser == filter.idUser)
+
+	if(!!filter.name) dataFiltered = dataFiltered.filter(d => d.name.toLowerCase().includes(filter.name?.toLowerCase() ?? ''))
+
+	return dataFiltered
+}
+
+export const getWallets = async (filter?: WalletFilter) => {
+	const auth = readFromStorage(StorageKey.auth) as LoggedUser
+	const userFilter = filter ?? {} as WalletFilter
+	userFilter.idUser = auth.idUser
+
 	const wallets = readFromStorage(DatabaseKey.wallet) as Wallet[]
-	return wallets
+	const walletsFiltered = filteredFunction(wallets, userFilter)
+	
+	return walletsFiltered
 }
 
 export const getWallet = async (idWallet: number) => {
