@@ -3,7 +3,7 @@ import { route } from "../../../contextes/route.context"
 import { getWallet } from "../../../api/controllers/wallet-controller"
 import { Wallet } from "../../../models/entities/wallet"
 import { Box, Button } from "@mui/material"
-import { Close } from "../../../components/elements/close"
+import { CloseButton } from "../../../components/elements/close-button"
 
 export const walletPageLoader = async ({ params }: LoaderFunctionArgs) => {
 	const idWallet = params.idWallet as number | undefined
@@ -31,7 +31,7 @@ export const WalletPage = () => {
 				<Box sx={{
 					alignSelf: 'end'
 				}}>
-					<Close action={route.wallets} />
+					<CloseButton action={route.wallets} />
 				</Box>
 				
 				<h1>Wallet page</h1>

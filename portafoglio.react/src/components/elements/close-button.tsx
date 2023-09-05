@@ -5,7 +5,7 @@ export interface CloseProps {
 	action?: string
 }
 
-export const Close: React.FC<CloseProps> = ({action}) => {
+export const CloseButton: React.FC<CloseProps> = ({action}) => {
 	return (
 		<>
 			<Form action={action}>

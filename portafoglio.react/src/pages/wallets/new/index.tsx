@@ -5,14 +5,14 @@ import { LoggedUser } from "../../../models/dtos/logged-user"
 import { Wallet } from "../../../models/entities/wallet"
 import { createWallet } from "../../../api/controllers/wallet-controller"
 import { route } from "../../../contextes/route.context"
-import { Close } from "../../../components/elements/close"
+import { CloseButton } from "../../../components/elements/close-button"
 
 export const NewWalletPage = () => {
 	return (
 		<>
 			<Box sx={{
 				flexGrow: 1,
-				
+
 				display: 'flex',
 				flexDirection: 'column',
 				gap: '20px',
@@ -21,7 +21,7 @@ export const NewWalletPage = () => {
 				<Box sx={{
 					alignSelf: 'end'
 				}}>
-					<Close action={route.wallets} />
+					<CloseButton action={route.wallets} />
 				</Box>
 				<Form method="post">
 					<Box sx={{
