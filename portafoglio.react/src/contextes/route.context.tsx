@@ -61,5 +61,5 @@ export default router
 export enum route {
 	home = '/',
 	login = '/auth/login',
-	wallets = '/walletsx'
+	wallets = '/wallets'
 }
