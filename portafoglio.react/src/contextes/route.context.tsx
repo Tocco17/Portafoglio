@@ -6,6 +6,7 @@ import RequireAuth from "../components/auth/require-auth";
 import { SeeDb, seeDbLoader } from "../pages/see-db";
 import { Wallets, walletsLoader } from "../pages/wallets";
 import { WalletPage } from "../pages/wallets/idWallet";
+import { NewWalletPage, newWalletPageAction } from "../pages/wallets/new";
 
 const router = createBrowserRouter([
 	{
@@ -44,7 +45,12 @@ const router = createBrowserRouter([
 						loader: walletsLoader,
 						children: [
 							{
-								path: ':idWallet'
+								path: ':idWallet/'
+							},
+							{
+								path: 'new/',
+								element: <NewWalletPage />,
+								action: newWalletPageAction,
 							}
 						]
 					},

@@ -39,7 +39,7 @@ export const Login = () => {
 }
 
 export const loginSubmitAction = async ({ request }: ActionFunctionArgs) => {
-	let formData = await request.formData()
+	const formData = await request.formData()
 
 	const username = formData.get("username") as string
 	const password = formData.get("password") as string

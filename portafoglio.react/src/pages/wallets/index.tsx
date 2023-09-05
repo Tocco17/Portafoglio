@@ -1,7 +1,7 @@
-import { Outlet, useLoaderData } from "react-router-dom"
+import { Form, Outlet, useLoaderData } from "react-router-dom"
 import { getWallets } from "../../api/controllers/wallet-controller"
 import { Wallet } from "../../models/entities/wallet"
-import { Box } from "@mui/material"
+import { Box, Button } from "@mui/material"
 
 export const walletsLoader = async () => {
 	const wallets = await getWallets()
@@ -16,15 +16,28 @@ export const Wallets = () => {
 			<Box sx={{
 				height: '100%',
 				width: '100%',
-				
+
 				display: 'flex',
 				flexDirection: 'row',
 				justifyContent: 'center',
 			}}>
 				<Box sx={{
 					width: 'calc(100%/3)',
-					height: 'inherit'
+					height: 'inherit',
+					display: 'flex',
+					flexDirection: 'column'
 				}}>
+					<Box sx={{
+						width: 'inherit',
+						display: 'flex',
+						flexDirection: 'row',
+					}}>
+						<Box>Prova box</Box>
+
+						<Form action="new">
+							<Button type="submit">New</Button>
+						</Form>
+					</Box>
 
 					<ul>
 						{wallets.map((wallet, index) => (
