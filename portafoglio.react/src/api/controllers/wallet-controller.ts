@@ -1,12 +1,7 @@
 import { LoggedUser } from "../../models/dtos/logged-user"
 import { Wallet } from "../../models/entities/wallet"
-import { DatabaseKey, insertNewData,  } from "../../utils/simil-axios-storage"
+import { DatabaseKey, getById, insertNewData,  } from "../../utils/simil-axios-storage"
 import { StorageKey, readFromStorage } from "../../utils/storage"
-
-export const getWallets = async () => {
-	const wallets = readFromStorage(DatabaseKey.wallet) as Wallet[]
-	return wallets
-}
 
 export const createWallet = async (name: string, description?: string) => {
 	const auth = readFromStorage(StorageKey.auth) as LoggedUser
@@ -29,4 +24,15 @@ export const createWallet = async (name: string, description?: string) => {
 	if(!walletCreated.id) throw new Error('Wallet not created.')
 	
 	return walletCreated.id
+}
+
+export const getWallets = async () => {
+	const wallets = readFromStorage(DatabaseKey.wallet) as Wallet[]
+	return wallets
+}
+
+export const getWallet = async (idWallet: number) => {
+	const wallet = getById(DatabaseKey.wallet, idWallet) as Wallet | undefined
+	if(!wallet) throw new Error('Wallet not found.')
+	return wallet
 }
