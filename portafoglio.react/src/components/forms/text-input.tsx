@@ -9,6 +9,7 @@ export interface TextInputProps {
 	children?: ReactNode
 	required?: boolean
 	defaultValue?: string
+	placeholder?: string
 
 	type?: TextInputType
 }
@@ -19,11 +20,12 @@ export const TextInput: React.FC<TextInputProps> = ({
 	name,
 	required,
 	defaultValue,
-	type
+	type,
+	placeholder,
 }) => {
 	return (
 		<FormControl>
-			<FormLabel htmlFor={id}>{children}</FormLabel>
+			{children && <FormLabel htmlFor={id}>{children}</FormLabel>}
 
 			<TextField
 				id={id}
@@ -31,6 +33,7 @@ export const TextInput: React.FC<TextInputProps> = ({
 				required={required}
 				defaultValue={defaultValue}
 				type={type}
+				placeholder={placeholder}
 			/>
 		</FormControl>
 	)
