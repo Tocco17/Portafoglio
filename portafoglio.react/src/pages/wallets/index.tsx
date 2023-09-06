@@ -2,6 +2,7 @@ import { Form, Link, LoaderFunctionArgs, NavLink, Outlet, useLoaderData } from "
 import { getWallets } from "../../api/controllers/wallet-controller"
 import { Wallet } from "../../models/entities/wallet"
 import { Box, Button, Input, InputLabel } from "@mui/material"
+import { TextInput } from "../../components/forms/text-input"
 
 interface WalletLoaderData {
 	wallets: Wallet[] | undefined
@@ -46,8 +47,7 @@ export const Wallets = () => {
 						justifyContent: 'space-between',
 					}}>
 						<Form role="search">
-							<InputLabel htmlFor="search-wallet-input" >Search</InputLabel>
-							<Input id="search-wallet-input" type="search" name="q" defaultValue={q} />
+							<TextInput id="search-wallet-input" name="q" defaultValue={q} type="search">Search</TextInput>
 						</Form>
 
 						<Form action="new">

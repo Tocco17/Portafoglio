@@ -1,4 +1,4 @@
-import { Box, Button, FormControl, FormGroup, Input, InputLabel } from "@mui/material"
+import { Box, Button, FormControl, FormGroup, FormLabel, Input, InputLabel, TextField } from "@mui/material"
 import { ActionFunctionArgs, Form, redirect } from "react-router-dom"
 import { StorageKey, readFromStorage } from "../../../utils/storage"
 import { LoggedUser } from "../../../models/dtos/logged-user"
@@ -6,6 +6,7 @@ import { Wallet } from "../../../models/entities/wallet"
 import { createWallet } from "../../../api/controllers/wallet-controller"
 import { route } from "../../../contextes/route.context"
 import { CloseButton } from "../../../components/elements/close-button"
+import { TextInput } from "../../../components/forms/text-input"
 
 export const NewWalletPage = () => {
 	return (
@@ -18,11 +19,14 @@ export const NewWalletPage = () => {
 				gap: '20px',
 				height: '100%'
 			}}>
+				{/* CLOSE */}
 				<Box sx={{
 					alignSelf: 'end'
 				}}>
 					<CloseButton action={route.wallets} />
 				</Box>
+
+				{/* FORM */}
 				<Form method="post">
 					<Box sx={{
 						display: 'flex',
@@ -30,14 +34,9 @@ export const NewWalletPage = () => {
 						gap: '20px',
 						flexGrow: '1'
 					}}>
-						<FormControl>
-							<InputLabel htmlFor="wallet-name-input" >Name</InputLabel>
-							<Input id="wallet-name-input" name="name" required />
-						</FormControl>
-						<FormControl>
-							<InputLabel htmlFor="wallet-description-input" >Description</InputLabel>
-							<Input id="wallet-description-input" name="description" />
-						</FormControl>
+						<TextInput id="wallet-name-input" name="name" required>Name</TextInput>
+
+						<TextInput id="wallet-description-input" name="description">Description</TextInput>
 
 						<Button type="submit">Create</Button>
 					</Box>
@@ -59,12 +58,3 @@ export const newWalletPageAction = async ({ request }: ActionFunctionArgs) => {
 
 	return redirect(`${route.wallets}/${newId}`)
 }
-
-/*
-idUser: number
-	name: string
-	description?: string
-
-	money: number
-	lastUpdate: Date
-*/

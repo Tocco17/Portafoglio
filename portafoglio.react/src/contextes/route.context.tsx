@@ -8,65 +8,72 @@ import { Wallets, walletsLoader } from "../pages/wallets";
 import { WalletPage, walletPageLoader } from "../pages/wallets/idWallet";
 import { NewWalletPage, newWalletPageAction } from "../pages/wallets/new";
 import { EditWallet, editWalletAction, editWalletLoader } from "../pages/wallets/idWallet/edit";
+import { DefaultLayout } from "../components/layouts/default-layout";
 
 const router = createBrowserRouter([
 	{
-		path: '/',
+		element: <DefaultLayout />,
 		children: [
 			{
-				path: 'define-db',
-				element: <DefineDb />,
-				loader: defineDbLoader,
-			},
-			{
-				path: 'see-db',
-				element: <SeeDb />,
-				loader: seeDbLoader,
-			},
-			{
-				path: 'auth/',
+				path: '/',
 				children: [
 					{
-						path: 'login/',
-						action: loginSubmitAction,
-						element: <Login />,
-					}
-				]
-			},
-			{
-				element: <RequireAuth />,
-				children: [
-					{
-						index: true,
-						element: <Home />,
+						path: 'define-db',
+						element: <DefineDb />,
+						loader: defineDbLoader,
 					},
 					{
-						path: 'wallets/',
-						element: <Wallets />,
-						loader: walletsLoader,
+						path: 'see-db',
+						element: <SeeDb />,
+						loader: seeDbLoader,
+					},
+					{
+						path: 'auth/',
 						children: [
 							{
-								path: ':idWallet/',
-								element: <WalletPage />,
-								loader: walletPageLoader,
-							},
-							{
-								path: ':idWallet/edit/',
-								element: <EditWallet />,
-								loader: editWalletLoader,
-								action: editWalletAction,
-							},
-							{
-								path: 'new/',
-								element: <NewWalletPage />,
-								action: newWalletPageAction,
+								path: 'login/',
+								action: loginSubmitAction,
+								element: <Login />,
 							}
 						]
 					},
-				],
+					{
+						element: <RequireAuth />,
+						children: [
+							{
+								index: true,
+								element: <Home />,
+							},
+							{
+								path: 'wallets/',
+								element: <Wallets />,
+								loader: walletsLoader,
+								children: [
+									{
+										path: ':idWallet/',
+										element: <WalletPage />,
+										loader: walletPageLoader,
+									},
+									{
+										path: ':idWallet/edit/',
+										element: <EditWallet />,
+										loader: editWalletLoader,
+										action: editWalletAction,
+									},
+									{
+										path: 'new/',
+										element: <NewWalletPage />,
+										action: newWalletPageAction,
+									}
+								]
+							},
+						],
+					},
+				]
 			},
 		]
-	},
+	}
+	
 
 ])
 
