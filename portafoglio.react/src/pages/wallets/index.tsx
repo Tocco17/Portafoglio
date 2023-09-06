@@ -1,7 +1,7 @@
-import { Form, Link, LoaderFunctionArgs, NavLink, Outlet, useLoaderData } from "react-router-dom"
+import { Form, Link, LoaderFunctionArgs, NavLink, Outlet, redirect, useLoaderData, useNavigate } from "react-router-dom"
 import { getWallets } from "../../api/controllers/wallet-controller"
 import { Wallet } from "../../models/entities/wallet"
-import { Box, Button, Input, InputLabel } from "@mui/material"
+import { Box, Button, Input, InputLabel, List, ListItem, ListItemButton } from "@mui/material"
 import { TextInput } from "../../components/forms/text-input"
 
 interface WalletLoaderData {
@@ -12,7 +12,7 @@ interface WalletLoaderData {
 export const walletsLoader = async ({ request }: LoaderFunctionArgs) => {
 	const url = new URL(request.url)
 	const q = url.searchParams.get("q") as string | undefined
-	const wallets = await getWallets({name: q})
+	const wallets = await getWallets({ name: q })
 
 	const walletLoaderData: WalletLoaderData = {
 		wallets,
@@ -22,7 +22,13 @@ export const walletsLoader = async ({ request }: LoaderFunctionArgs) => {
 }
 
 export const Wallets = () => {
-	const {wallets, q} = useLoaderData() as WalletLoaderData
+	const { wallets, q } = useLoaderData() as WalletLoaderData
+	const navigate = useNavigate()
+
+	const handleNavBarClick = (wallet: Wallet) => {
+		// return () => navigate(`${wallet.id ?? '/'}`)
+		return () => true
+	}
 
 	return (
 		<>
@@ -39,19 +45,39 @@ export const Wallets = () => {
 					display: 'flex',
 					flexDirection: 'column',
 					alignItems: 'center',
+					borderRadius: '20px',
+					paddingX: '15px',
+					paddingY: '20px',
+
+					boxShadow: `5px 5px 20px rgba(0, 0, 0, 0.25),
+					10px 10px 70px rgba(0, 0, 0, 0.25),
+					inset 3px 3px 5px rgba(0, 0, 0, 0.25),
+					inset 5px 5px 20px rgba(255, 255, 255, 0.2),
+					inset -3px -3px 10px rgba(0, 0, 0, 0.25)`
+
 				}}>
 					<Box sx={{
 						width: '100%',
 						display: 'flex',
 						flexDirection: 'row',
 						justifyContent: 'space-between',
+
+
 					}}>
 						<Form role="search">
-							<TextInput id="search-wallet-input" name="q" defaultValue={q} type="search">Search</TextInput>
+							<TextInput id="search-wallet-input" name="q" defaultValue={q} type="search" placeholder="Search" />
 						</Form>
 
 						<Form action="new">
-							<Button type="submit">New</Button>
+							<Box sx={{
+								display: 'flex',
+								justifyContent: 'center',
+								alignItems: 'center',
+								width: '100%',
+								height: '100%',
+							}}>
+								<Button type="submit">New</Button>
+							</Box>
 						</Form>
 					</Box>
 
@@ -62,6 +88,20 @@ export const Wallets = () => {
 							</li>
 						))}
 					</nav>
+
+					<div>OK</div>
+
+					<List>
+						{wallets?.map((wallet, index) => (
+							<>
+								<ListItem key={`list-item-wallet-${index}-${wallet.name}`}>
+									<ListItemButton action={handleNavBarClick(wallet)}>
+										{wallet.name}
+									</ListItemButton>
+								</ListItem>
+							</>
+						))}
+					</List>
 				</Box>
 
 				<Outlet />
