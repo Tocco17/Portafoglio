@@ -1,8 +1,10 @@
-import { Form, Link, LoaderFunctionArgs, NavLink, Outlet, redirect, useLoaderData, useNavigate } from "react-router-dom"
+import { Form, LoaderFunctionArgs, NavLink, Outlet, redirect, useLoaderData, useNavigate } from "react-router-dom"
 import { getWallets } from "../../api/controllers/wallet-controller"
 import { Wallet } from "../../models/entities/wallet"
-import { Box, Button, Input, InputLabel, List, ListItem, ListItemButton } from "@mui/material"
+import { Box, Button, Input, InputLabel, Link, List, ListItem, ListItemButton } from "@mui/material"
 import { TextInput } from "../../components/forms/text-input"
+import { route } from "../../contextes/route.context"
+import './main.css'
 
 interface WalletLoaderData {
 	wallets: Wallet[] | undefined
@@ -44,7 +46,9 @@ export const Wallets = () => {
 					height: 'inherit',
 					display: 'flex',
 					flexDirection: 'column',
-					alignItems: 'center',
+					alignItems: 'start',
+					gap: '15px',
+					
 					borderRadius: '20px',
 					paddingX: '15px',
 					paddingY: '20px',
@@ -81,27 +85,13 @@ export const Wallets = () => {
 						</Form>
 					</Box>
 
-					<nav>
+					<nav className="nav-wallet-list">
 						{wallets?.map((wallet, index) => (
 							<li key={`wallet-${index}-${wallet.name}`}>
 								<NavLink to={`${wallet.id ?? '/'}`}>{wallet.name}</NavLink>
 							</li>
 						))}
 					</nav>
-
-					<div>OK</div>
-
-					<List>
-						{wallets?.map((wallet, index) => (
-							<>
-								<ListItem key={`list-item-wallet-${index}-${wallet.name}`}>
-									<ListItemButton action={handleNavBarClick(wallet)}>
-										{wallet.name}
-									</ListItemButton>
-								</ListItem>
-							</>
-						))}
-					</List>
 				</Box>
 
 				<Outlet />

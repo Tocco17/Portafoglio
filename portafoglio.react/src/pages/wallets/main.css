@@ -1,0 +1,26 @@
+.nav-wallet-list{
+	list-style: none;
+
+	display: flex;
+	flex-direction: column;
+	gap: 3px;
+}
+
+.nav-wallet-list li{
+	text-decoration: none;
+
+	border-radius: 20px;
+	padding: 5px;
+}
+
+.nav-wallet-list li:hover{
+	background-color: #c2c2c2;
+}
+
+.nav-wallet-list a{
+	text-decoration: none;
+	color: inherit;
+	text-transform: uppercase;
+	margin: 5px;
+}
+
