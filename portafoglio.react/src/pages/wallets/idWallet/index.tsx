@@ -31,8 +31,6 @@ export const WalletPage = () => {
 				paddingX: '50px',
 			}}>
 				<Box sx={{
-					// alignSelf: 'end',
-
 					display: 'flex',
 					flexDirection: 'row',
 					justifyContent: 'space-between',
