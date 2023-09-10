@@ -4,6 +4,7 @@ import { getWallet } from "../../../api/controllers/wallet-controller"
 import { Wallet } from "../../../models/entities/wallet"
 import { Box, Button } from "@mui/material"
 import { CloseButton } from "../../../components/elements/close-button"
+import { moneyToString } from "../../../utils/format"
 
 export const walletPageLoader = async ({ params }: LoaderFunctionArgs) => {
 	const idWallet = params.idWallet as number | undefined
@@ -22,19 +23,25 @@ export const WalletPage = () => {
 		<>
 			<Box sx={{
 				flexGrow: 1,
-				
+
 				display: 'flex',
 				flexDirection: 'column',
 				justifyContent: 'start',
 				gap: '50px',
+				paddingX: '50px',
 			}}>
 				<Box sx={{
-					alignSelf: 'end'
+					// alignSelf: 'end',
+
+					display: 'flex',
+					flexDirection: 'row',
+					justifyContent: 'space-between',
+					alignItems: 'center'
 				}}>
+					<h1>{wallet?.name}</h1>
 					<CloseButton action={route.wallets} />
 				</Box>
-				
-				<h1>Wallet page</h1>
+
 
 				<Box sx={{
 					display: 'flex',
@@ -42,8 +49,8 @@ export const WalletPage = () => {
 					justifyContent: 'start',
 					gap: '10px',
 				}}>
-					<div>{wallet?.name}</div>
 					<div>{wallet?.description}</div>
+					<div>{moneyToString(wallet?.money)}</div>
 				</Box>
 
 				<Box sx={{
