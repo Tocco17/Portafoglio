@@ -4,8 +4,8 @@ import { editWallet, getWallet } from "../../../../api/controllers/wallet-contro
 import { Wallet } from "../../../../models/entities/wallet"
 import { Box, Button, FormControl, Input, InputLabel } from "@mui/material"
 import { CloseButton } from "../../../../components/elements/close-button"
-import { EditWalletRequest } from "../../../../models/requests/edit-wallet.request"
 import { TextInput } from "../../../../components/forms/text-input"
+import { MoneyInput } from "../../../../components/forms/money-input"
 
 export const editWalletLoader = async ({ params }: LoaderFunctionArgs) => {
 	const idWallet = params.idWallet as number | undefined
@@ -19,6 +19,8 @@ export const editWalletLoader = async ({ params }: LoaderFunctionArgs) => {
 
 export const EditWallet = () => {
 	const wallet = useLoaderData() as Wallet
+
+	const moneyInString = `${wallet.money / 100}`
 
 	return (
 		<>
@@ -51,24 +53,11 @@ export const EditWallet = () => {
 						alignItems: 'start',
 						width: '100%'
 					}}>
-						<TextInput id="wallet-name-input" name="name" required>Name</TextInput>
+						<TextInput id="wallet-name-input" name="name" required defaultValue={wallet.name}>Name</TextInput>
 
-						<TextInput id="wallet-description-input" name="description">Description</TextInput>
+						<TextInput id="wallet-description-input" name="description" defaultValue={wallet.description}>Description</TextInput>
 
-						<FormControl sx={{ width: '100%' }}>
-							<InputLabel htmlFor="name-edit-input" >Name</InputLabel>
-							<Input id="name-edit-input" name="name" defaultValue={wallet.name} required />
-						</FormControl>
-
-						<FormControl sx={{ width: '100%' }}>
-							<InputLabel htmlFor="description-edit-input" >Description</InputLabel>
-							<Input id="description-edit-input" name="description" defaultValue={wallet.description} />
-						</FormControl>
-
-						<FormControl sx={{ width: '100%' }}>
-							<InputLabel htmlFor="money-edit-input" >Moneys</InputLabel>
-							<Input id="money-edit-input" name="money" defaultValue={wallet.money} />
-						</FormControl>
+						<MoneyInput id="wallet-money-input" name="money" defaultValue={moneyInString}>Moneys</MoneyInput>
 
 						<Input name="id" defaultValue={wallet.id} sx={{ display: 'none' }} />
 
@@ -85,11 +74,12 @@ export const editWalletAction = async ({ request }: ActionFunctionArgs) => {
 
 	const name = formData.get("name") as string
 	const description = formData.get("description") as string | undefined
+	const money = parseFloat(formData.get("money") as string)
 	const id = parseInt(formData.get("id") as string)
 
-	const apiRequest: EditWalletRequest = { id, name, description }
+	const moneyInCents = Math.trunc(money * 100)
 
-	await editWallet(apiRequest)
+	await editWallet({ id, name, description, money: moneyInCents })
 
 	return redirect(`${route.wallets}/${id}`)
 }

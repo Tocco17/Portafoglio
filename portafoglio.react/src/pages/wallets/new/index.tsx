@@ -38,6 +38,8 @@ export const NewWalletPage = () => {
 
 						<TextInput id="wallet-description-input" name="description">Description</TextInput>
 
+						<TextInput id="wallet-money-input" name="money" type="number">Moneys</TextInput>
+
 						<Button type="submit">Create</Button>
 					</Box>
 				</Form>
@@ -51,10 +53,13 @@ export const newWalletPageAction = async ({ request }: ActionFunctionArgs) => {
 
 	const name = formData.get("name") as string
 	const description = formData.get("description") as string | undefined
+	const money = parseFloat(formData.get("money") as string)
+
+	const moneyInCents = Math.trunc(money * 100)
 
 	if (!name) throw new Error("Name of the wallet not specified.")
 
-	const newId = await createWallet(name, description)
+	const newId = await createWallet({name, description, money: moneyInCents})
 
 	return redirect(`${route.wallets}/${newId}`)
 }

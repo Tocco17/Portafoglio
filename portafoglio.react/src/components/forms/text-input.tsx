@@ -1,4 +1,4 @@
-import { FormControl, FormLabel, TextField } from "@mui/material"
+import { FormControl, FormLabel, InputBaseComponentProps, TextField } from "@mui/material"
 import { ReactNode } from "react"
 
 type TextInputType = "button" | "checkbox" | "color" | "date" | "datetime-local" | "email" | "file" | "hidden" | "image" | "month" | "number" | "password" | "radio" | "range" | "reset" | "search" | "submit" | "tel" | "text" | "url" | "week"
@@ -12,6 +12,7 @@ export interface TextInputProps {
 	placeholder?: string
 
 	type?: TextInputType
+	inputProps?: InputBaseComponentProps 
 }
 
 export const TextInput: React.FC<TextInputProps> = ({
@@ -22,6 +23,7 @@ export const TextInput: React.FC<TextInputProps> = ({
 	defaultValue,
 	type,
 	placeholder,
+	inputProps,
 }) => {
 	return (
 		<FormControl>
@@ -34,6 +36,7 @@ export const TextInput: React.FC<TextInputProps> = ({
 				defaultValue={defaultValue}
 				type={type}
 				placeholder={placeholder}
+				inputProps={inputProps}
 			/>
 		</FormControl>
 	)

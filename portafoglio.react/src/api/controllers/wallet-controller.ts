@@ -1,11 +1,11 @@
 import { LoggedUser } from "../../models/dtos/logged-user"
 import { Wallet } from "../../models/entities/wallet"
 import { WalletFilter } from "../../models/filters/wallet.filter"
-import { EditWalletRequest } from "../../models/requests/edit-wallet.request"
+import { CreateWalletRequest, EditWalletRequest } from "../../models/requests/wallet-request"
 import { DatabaseKey, getById, getList, insertNewData,  } from "../../utils/simil-axios-storage"
 import { StorageKey, readFromStorage, writeToStorage } from "../../utils/storage"
 
-export const createWallet = async (name: string, description?: string) => {
+export const createWallet = async (request: CreateWalletRequest) => {
 	const auth = readFromStorage(StorageKey.auth) as LoggedUser
 	if(!auth || !auth.idUser) throw new Error("Not logged in.")
 
@@ -15,9 +15,9 @@ export const createWallet = async (name: string, description?: string) => {
 	const wallet: Wallet = {
 		idUser: idUser,
 		isActive: true,
-		money: 0,
-		name: name,
-		description: description,
+		money: request.money,
+		name: request.name,
+		description: request.description,
 		lastUpdate: new Date(data),
 	}
 
@@ -69,7 +69,7 @@ export const editWallet = async (request: EditWalletRequest) => {
 
 	if(!dataToEdit) return false
 
-	const dataEdited: Wallet = {...dataToEdit, name: request.name, description: request.description}
+	const dataEdited: Wallet = {...dataToEdit, name: request.name, description: request.description, money: request.money}
 	newDatabase.push(dataEdited)
 
 	writeToStorage(DatabaseKey.wallet, newDatabase)
