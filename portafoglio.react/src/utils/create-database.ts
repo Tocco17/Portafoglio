@@ -28,7 +28,7 @@ const labelDb: Label[] = [
 ]
 
 const walletDb: Wallet[] = [
-	{ id: 1, isActive: true, idUser: 1, lastUpdate: new Date(2023, 0, 1), money: 1500000, name: 'Conto', description: 'Generic conto' },
+	{ id: 1, isActive: true, idUser: 1, lastUpdate: new Date(2023, 0, 1), money: 150000, name: 'Conto', description: 'Generic conto' },
 ]
 
 export interface DbKeyValue {
