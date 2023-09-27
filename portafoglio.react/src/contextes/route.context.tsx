@@ -9,6 +9,7 @@ import { WalletPage, walletPageLoader } from "../pages/wallets/idWallet";
 import { NewWalletPage, newWalletPageAction } from "../pages/wallets/new";
 import { EditWallet, editWalletAction, editWalletLoader } from "../pages/wallets/idWallet/edit";
 import { DefaultLayout } from "../components/layouts/default-layout";
+import { LabelPage } from "../pages/labels";
 
 const router = createBrowserRouter([
 	{
@@ -67,6 +68,10 @@ const router = createBrowserRouter([
 									}
 								]
 							},
+							{
+								path: 'labels/',
+								element: <LabelPage />,
+							}
 						],
 					},
 				]
@@ -83,5 +88,6 @@ export default router
 export enum route {
 	home = '/',
 	login = '/auth/login',
-	wallets = '/wallets'
+	wallets = '/wallets',
+	labels = '/labels',
 }

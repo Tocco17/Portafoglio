@@ -8,6 +8,7 @@ const Home = () => {
         <div>Home</div>
         <Button component={Link} to={route.login}>Login</Button>
         <Button component={Link} to={route.wallets}>Wallets</Button>
+        <Button component={Link} to={route.labels}>Labels</Button>
         </>
     )
 }
