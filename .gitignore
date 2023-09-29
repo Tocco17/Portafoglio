@@ -5,3 +5,4 @@ portafoglio.api/bin
 *.db
 *.db-shm
 *.db-wal
+portafoglio.api/portafoglio.api/obj
