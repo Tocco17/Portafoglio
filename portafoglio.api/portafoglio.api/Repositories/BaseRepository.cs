@@ -27,8 +27,12 @@ public interface IRepository<TEntity, TFilter>
 
 public interface ILogicDeleteRepository<TEntity, TFilter> : IRepository<TEntity, TFilter>
 	where TEntity : LogicDeleteEntity
-	where TFilter : IFilter<TEntity>
+	where TFilter : ILogicDeleteFilter<TEntity>
 {
+	Task<IEnumerable<TEntity>> GetActiveAsync(TFilter? filter);
+	Task<TEntity?> GetActiveSingleOrDefaultAsync(TFilter? filter);
+	Task<IEnumerable<TEntity>> GetDeActiveAsync(TFilter? filter);
+	Task<TEntity?> GetDeActiveSingleOrDefaultAsync(TFilter? filter);
 	Task<int> ActivateLogicallyAsync(Guid id);
 	Task<int> ActivateLogicallyAsync(IEnumerable<Guid> ids);
 	Task<int> DeleteLogicallyAsync(Guid id);
@@ -100,7 +104,7 @@ public abstract class BaseRepository<TEntity, TFilter> : IRepository<TEntity, TF
 
 	public virtual async Task<TEntity?> GetSingleOrDefaultAsync(TFilter? filter)
 	{
-		var query = GetFilteredQuery(filter ?? new TFilter { Size = 1 });
+		var query = GetFilteredQuery(filter);
 		return await query.SingleOrDefaultAsync();
 	}
 
@@ -137,7 +141,7 @@ public abstract class BaseRepository<TEntity, TFilter> : IRepository<TEntity, TF
 
 public abstract class BaseLogicDeleteRepository<TEntity, TFilter> : BaseRepository<TEntity, TFilter>, ILogicDeleteRepository<TEntity, TFilter>
 	where TEntity : LogicDeleteEntity
-	where TFilter : IFilter<TEntity>, new()
+	where TFilter : ILogicDeleteFilter<TEntity>, new()
 {
 	protected BaseLogicDeleteRepository(PortafoglioDbContext dbContext) : base(dbContext)
 	{
@@ -172,12 +176,44 @@ public abstract class BaseLogicDeleteRepository<TEntity, TFilter> : BaseReposito
 	public virtual async Task<int> DeleteLogicallyAsync(IEnumerable<Guid> ids)
 	{
 		var entities = await GetByIdAsync(ids);
-		
-		foreach(var entity in entities)
+
+		foreach (var entity in entities)
 		{
 			entity.IsActive = false;
 		}
 
 		return await UpdateAsync(entities);
+	}
+
+	public async Task<IEnumerable<TEntity>> GetActiveAsync(TFilter? filter)
+	{
+		filter ??= new TFilter();
+		filter.IsActive = true;
+		var query = GetFilteredQuery(filter);
+		return await query.ToListAsync();
+	}
+
+	public async Task<TEntity?> GetActiveSingleOrDefaultAsync(TFilter? filter)
+	{
+		filter ??= new TFilter();
+		filter.IsActive = true;
+		var query = GetFilteredQuery(filter);
+		return await query.SingleOrDefaultAsync();
+	}
+
+	public async Task<IEnumerable<TEntity>> GetDeActiveAsync(TFilter? filter)
+	{
+		filter ??= new TFilter();
+		filter.IsActive = false;
+		var query = GetFilteredQuery(filter);
+		return await query.ToListAsync();
+	}
+
+	public async Task<TEntity?> GetDeActiveSingleOrDefaultAsync(TFilter? filter)
+	{
+		filter ??= new TFilter();
+		filter.IsActive = false;
+		var query = GetFilteredQuery(filter);
+		return await query.SingleOrDefaultAsync();
 	}
 }
