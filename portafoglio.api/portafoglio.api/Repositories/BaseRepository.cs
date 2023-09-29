@@ -48,63 +48,63 @@ public abstract class BaseRepository<TEntity, TFilter> : IRepository<TEntity, TF
 		_dbSet = dbContext.Set<TEntity>();
 	}
 
-	public async Task<Guid> AddAsync(TEntity entity)
+	public virtual async Task<Guid> AddAsync(TEntity entity)
 	{
 		await _dbSet.AddAsync(entity);
 		await _dbContext.SaveChangesAsync();
 		return entity.Id;
 	}
 
-	public async Task<IEnumerable<Guid>> AddAsync(IEnumerable<TEntity> entities)
+	public virtual async Task<IEnumerable<Guid>> AddAsync(IEnumerable<TEntity> entities)
 	{
 		await _dbSet.AddRangeAsync(entities);
 		await _dbContext.SaveChangesAsync();
 		return entities.Select(x => x.Id);
 	}
 
-	public async Task<int> DeleteAsync(Guid id)
+	public virtual async Task<int> DeleteAsync(Guid id)
 	{
 		return await _dbSet
 			.Where(x => x.Id == id)
 			.ExecuteDeleteAsync();
 	}
 
-	public async Task<int> DeleteAsync(IEnumerable<Guid> ids)
+	public virtual async Task<int> DeleteAsync(IEnumerable<Guid> ids)
 	{
 		return await _dbSet
 			.Where(x => ids.Any(id => id.Equals(x.Id)))
 			.ExecuteDeleteAsync();
 	}
 
-	public async Task<IEnumerable<TEntity>> GetAsync(TFilter? filter)
+	public virtual async Task<IEnumerable<TEntity>> GetAsync(TFilter? filter)
 	{
 		var query = GetFilteredQuery(filter);
 		return await query.ToListAsync();
 	}
 
-	public async Task<IEnumerable<TEntity>> GetByIdAsync(IEnumerable<Guid> idList)
+	public virtual async Task<IEnumerable<TEntity>> GetByIdAsync(IEnumerable<Guid> idList)
 	{
 		return await _dbSet.Where(x => idList.Any(id => id.Equals(x))).ToListAsync();
 	}
 
-	public async Task<TEntity> GetByIdAsync(Guid id)
+	public virtual async Task<TEntity> GetByIdAsync(Guid id)
 	{
 		return await _dbSet.SingleAsync(x => x.Id.Equals(id));
 	}
 
-	public async Task<int> GetCountAsync(TFilter? filter)
+	public virtual async Task<int> GetCountAsync(TFilter? filter)
 	{
 		var query = GetFilteredQuery(filter);
 		return await query.CountAsync();
 	}
 
-	public async Task<TEntity?> GetSingleOrDefaultAsync(TFilter? filter)
+	public virtual async Task<TEntity?> GetSingleOrDefaultAsync(TFilter? filter)
 	{
 		var query = GetFilteredQuery(filter ?? new TFilter { Size = 1 });
 		return await query.SingleOrDefaultAsync();
 	}
 
-	public async Task<int> UpdateAsync(TEntity entity)
+	public virtual async Task<int> UpdateAsync(TEntity entity)
 	{
 		if (!await _dbSet.AnyAsync(x => x.Id.Equals(entity.Id)))
 			throw new Exception("Entity not found.");
@@ -113,7 +113,7 @@ public abstract class BaseRepository<TEntity, TFilter> : IRepository<TEntity, TF
 		return await _dbContext.SaveChangesAsync();
 	}
 
-	public async Task<int> UpdateAsync(IEnumerable<TEntity> entities)
+	public virtual async Task<int> UpdateAsync(IEnumerable<TEntity> entities)
 	{
 		var ok = entities.All(entity =>
 		{
@@ -127,7 +127,7 @@ public abstract class BaseRepository<TEntity, TFilter> : IRepository<TEntity, TF
 		return await _dbContext.SaveChangesAsync();
 	}
 
-	protected IQueryable<TEntity> GetFilteredQuery(TFilter? filter)
+	protected virtual IQueryable<TEntity> GetFilteredQuery(TFilter? filter)
 	{
 		var baseQuery = _dbSet.AsQueryable();
 		var query = filter?.GetOptionsFilterQuery(baseQuery) ?? baseQuery;
@@ -143,14 +143,14 @@ public abstract class BaseLogicDeleteRepository<TEntity, TFilter> : BaseReposito
 	{
 	}
 
-	public async Task<int> ActivateLogicallyAsync(Guid id)
+	public virtual async Task<int> ActivateLogicallyAsync(Guid id)
 	{
 		var entity = await GetByIdAsync(id);
 		entity.IsActive = true;
 		return await UpdateAsync(entity);
 	}
 
-	public async Task<int> ActivateLogicallyAsync(IEnumerable<Guid> ids)
+	public virtual async Task<int> ActivateLogicallyAsync(IEnumerable<Guid> ids)
 	{
 		var entities = await GetByIdAsync(ids);
 
@@ -162,14 +162,14 @@ public abstract class BaseLogicDeleteRepository<TEntity, TFilter> : BaseReposito
 		return await UpdateAsync(entities);
 	}
 
-	public async Task<int> DeleteLogicallyAsync(Guid id)
+	public virtual async Task<int> DeleteLogicallyAsync(Guid id)
 	{
 		var entity = await GetByIdAsync(id);
 		entity.IsActive = false;
 		return await UpdateAsync(entity);
 	}
 
-	public async Task<int> DeleteLogicallyAsync(IEnumerable<Guid> ids)
+	public virtual async Task<int> DeleteLogicallyAsync(IEnumerable<Guid> ids)
 	{
 		var entities = await GetByIdAsync(ids);
 		
