@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
+﻿using Microsoft.AspNetCore.Mvc;
 using portafoglio.api.Models.Entities;
 using portafoglio.api.Models.Filters;
 using portafoglio.api.Repositories;
@@ -133,28 +131,28 @@ public abstract class BaseLogicDeleteController<TEntity, TFilter> : BaseControll
 	}
 
 	[HttpPost("active/{id}")]
-	public async Task<ActionResult> PostActive(Guid id)
+	public async virtual Task<ActionResult> PostActive(Guid id)
 	{
 		var count = await _dbLogicDeleteRepo.ActivateLogicallyAsync(id);
 		return count == 1 ? Ok(count) : NotFound();
 	}
 
 	[HttpPost("active/multiple")]
-	public async Task<ActionResult<int>> PostMultipleActive(IEnumerable<Guid> ids)
+	public async virtual Task<ActionResult<int>> PostMultipleActive(IEnumerable<Guid> ids)
 	{
 		var count = await _dbLogicDeleteRepo.ActivateLogicallyAsync(ids);
 		return count == ids.Count() ? Ok(count) : NotFound();
 	}
 
 	[HttpDelete("active/{id}")]
-	public async Task<ActionResult> DeleteActive(Guid id)
+	public async virtual Task<ActionResult> DeleteActive(Guid id)
 	{
 		var count = await _dbLogicDeleteRepo.DeleteLogicallyAsync(id);
 		return count == 1 ? Ok(count) : NotFound();
 	}
 
 	[HttpDelete("active/multiple")]
-	public async Task<ActionResult<int>> DeleteMultipleActive(IEnumerable<Guid> ids)
+	public async virtual Task<ActionResult<int>> DeleteMultipleActive(IEnumerable<Guid> ids)
 	{
 		var count = await _dbLogicDeleteRepo.DeleteLogicallyAsync(ids);
 		return count == ids.Count() ? Ok(count) : NotFound();

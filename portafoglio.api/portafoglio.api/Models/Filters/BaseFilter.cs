@@ -36,7 +36,7 @@ public abstract class BaseFilter<TEntity> : IFilter<TEntity> where TEntity : Bas
 	}
 }
 
-public abstract class LogicDeleteFilter<TEntity> : BaseFilter<TEntity>, ILogicDeleteFilter<TEntity> where TEntity : LogicDeleteEntity
+public abstract class BaseLogicDeleteFilter<TEntity> : BaseFilter<TEntity>, ILogicDeleteFilter<TEntity> where TEntity : LogicDeleteEntity
 {
 	public bool? IsActive { get; set; } = null;
 

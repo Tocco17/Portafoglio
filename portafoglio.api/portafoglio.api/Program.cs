@@ -2,6 +2,9 @@ using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using portafoglio.api.Contextes;
+using portafoglio.api.Models.Entities;
+using portafoglio.api.Models.Filters;
+using portafoglio.api.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,6 +39,17 @@ builder.Services
 		)
 	);
 
+builder.Services.AddScoped<IRepository<Earning, EarningFilter>, EarningRepository>();
+builder.Services.AddScoped<IRepository<EarningSuddivision, EarningSuddivisionFilter>, EarningSuddivisionRepository>();
+builder.Services.AddScoped<IRepository<Label, LabelFilter>, LabelRepository>();
+builder.Services.AddScoped<IRepository<Transaction, TransactionFilter>, TransactionRepository>();
+builder.Services.AddScoped<IRepository<User, UserFilter>, UserRepository>();
+builder.Services.AddScoped<IRepository<Wallet, WalletFilter>, WalletRepository>();
+
+builder.Services.AddScoped<ILogicDeleteRepository<EarningSuddivision, EarningSuddivisionFilter>, EarningSuddivisionRepository>();
+builder.Services.AddScoped<ILogicDeleteRepository<Label, LabelFilter>, LabelRepository>();
+builder.Services.AddScoped<ILogicDeleteRepository<User, UserFilter>, UserRepository>();
+builder.Services.AddScoped<ILogicDeleteRepository<Wallet, WalletFilter>, WalletRepository>();
 
 var app = builder.Build();
 
