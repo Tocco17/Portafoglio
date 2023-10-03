@@ -2,6 +2,7 @@
 using portafoglio.api.Models.Entities;
 using portafoglio.api.Models.Filters;
 using portafoglio.api.Repositories;
+using portafoglio.api.Services;
 
 namespace portafoglio.api.Controllers;
 
@@ -9,8 +10,11 @@ namespace portafoglio.api.Controllers;
 [Route("api/[controller]")]
 public class UserController : BaseLogicDeleteController<User, UserFilter>
 {
-	public UserController(IRepository<User, UserFilter> dbRepo, ILogicDeleteRepository<User, UserFilter> dbLogicDeleteRepo) : base(dbRepo, dbLogicDeleteRepo)
+	private readonly UserService _userService;
+
+	public UserController(IRepository<User, UserFilter> dbRepo, ILogicDeleteRepository<User, UserFilter> dbLogicDeleteRepo, UserService userService) : base(dbRepo, dbLogicDeleteRepo)
 	{
+		_userService = userService;
 	}
 
 	[HttpGet("Login")]
@@ -28,6 +32,12 @@ public class UserController : BaseLogicDeleteController<User, UserFilter>
 		if(guid == null)
 			return BadRequest();
 
+		return Ok(guid);
+	}
+
+	public async override Task<ActionResult<Guid>> Post([FromBody] User entity)
+	{
+		var guid = await _userService.CreateUser(entity);
 		return Ok(guid);
 	}
 }
