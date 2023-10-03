@@ -1,8 +1,8 @@
 import { BaseEntity } from "./base-entity";
 
 export interface Transaction extends BaseEntity {
-    idLabel: number
-    idWallet: number
+    idLabel: string
+    idWallet: string
 
     description: string
     value: number

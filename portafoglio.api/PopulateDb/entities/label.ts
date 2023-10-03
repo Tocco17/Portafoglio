@@ -1,8 +1,8 @@
 import { LogicDeleteEntity } from "./base-entity";
 
 export interface Label extends LogicDeleteEntity {
-	idEarningSuddivision: number
+	idEarningSuddivision: string
 	name: string
 	description?: string
-	idFatherLabel?: number
+	idFatherLabel?: string
 }
