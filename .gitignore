@@ -7,3 +7,6 @@ portafoglio.api/bin
 *.db-wal
 portafoglio.api/portafoglio.api/obj
 portafoglio.api/portafoglio.api/bin
+*.sqlite-wal
+*.sqlite-shm
+*.sqlite
