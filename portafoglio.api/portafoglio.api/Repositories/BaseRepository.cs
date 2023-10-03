@@ -23,6 +23,8 @@ public interface IRepository<TEntity, TFilter>
 
 	Task<int> DeleteAsync(Guid id);
 	Task<int> DeleteAsync(IEnumerable<Guid> ids);
+
+	Task<bool> AnyAsync(TFilter? filter);
 }
 
 public interface ILogicDeleteRepository<TEntity, TFilter> : IRepository<TEntity, TFilter>
@@ -64,6 +66,14 @@ public abstract class BaseRepository<TEntity, TFilter> : IRepository<TEntity, TF
 		await _dbSet.AddRangeAsync(entities);
 		await _dbContext.SaveChangesAsync();
 		return entities.Select(x => x.Id);
+	}
+
+	public async Task<bool> AnyAsync(TFilter? filter)
+	{
+		var dbQuery = _dbSet.AsQueryable();
+		var query = filter?.GetOptionsFilterQuery(dbQuery) ?? dbQuery;
+		var any = await query.AnyAsync();
+		return any;
 	}
 
 	public virtual async Task<int> DeleteAsync(Guid id)
