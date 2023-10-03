@@ -5,7 +5,7 @@ export interface CreateWalletRequest {
 }
 
 export interface EditWalletRequest {
-	id: number
+	id: string
 	name: string
 	description?: string
 	money: number

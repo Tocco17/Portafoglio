@@ -1,3 +1,4 @@
+import { LoggedUser } from "../models/dtos/logged-user"
 import { decode, encode } from "./serialize"
 
 export enum StorageKey {
@@ -22,3 +23,10 @@ export const readFromStorage = <T>(key: string) => {
 export const deleteFromStorage = (key: string) => localStorage.removeItem(key)
 
 export const clearStorage = () => localStorage.clear()
+
+export const getAuthFromStorage = () => {
+	const auth = readFromStorage(StorageKey.auth) as LoggedUser
+	if(!auth || !auth.idUser) throw new Error("Not logged in.")
+
+	return auth
+}

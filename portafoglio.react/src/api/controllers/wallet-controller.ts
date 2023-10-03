@@ -2,12 +2,11 @@ import { LoggedUser } from "../../models/dtos/logged-user"
 import { Wallet } from "../../models/entities/wallet"
 import { WalletFilter } from "../../models/filters/wallet.filter"
 import { CreateWalletRequest, EditWalletRequest } from "../../models/requests/wallet-request"
-import { DatabaseKey, getById, getList, insertNewData,  } from "../../utils/simil-axios-storage"
-import { StorageKey, readFromStorage, writeToStorage } from "../../utils/storage"
+import { StorageKey, getAuthFromStorage, readFromStorage, writeToStorage } from "../../utils/storage"
+import { getApi, postApi, putApi } from "../axios/calls"
 
 export const createWallet = async (request: CreateWalletRequest) => {
-	const auth = readFromStorage(StorageKey.auth) as LoggedUser
-	if(!auth || !auth.idUser) throw new Error("Not logged in.")
+	const auth = getAuthFromStorage()
 
 	const data = new Date().toUTCString()
 
@@ -21,58 +20,51 @@ export const createWallet = async (request: CreateWalletRequest) => {
 		lastUpdate: new Date(data),
 	}
 
-	const walletCreated = insertNewData(DatabaseKey.wallet, wallet) as Wallet
+	const response = await postApi<string>({
+		url: 'Wallet',
+		data: wallet,
+	})
 
-	if(!walletCreated.id) throw new Error('Wallet not created.')
-	
-	return walletCreated.id
+	return response.data
 }
-
-const filteredFunction = (database: Wallet[], filter?: WalletFilter) => {
-	if(!filter) return database
-
-	let dataFiltered = database.map(d => ({...d})) as Wallet[] | undefined
-
-	if(!dataFiltered) return undefined
-
-	if(!!filter.idUser) dataFiltered = dataFiltered.filter(d => d.idUser == filter.idUser)
-
-	if(!!filter.name) dataFiltered = dataFiltered.filter(d => d.name.toLowerCase().includes(filter.name?.toLowerCase() ?? ''))
-
-	return dataFiltered
-}
-
 export const getWallets = async (filter?: WalletFilter) => {
-	const auth = readFromStorage(StorageKey.auth) as LoggedUser
-	const userFilter = filter ?? {} as WalletFilter
-	userFilter.idUser = auth.idUser
+	const auth = getAuthFromStorage()
+	const walletFilter = filter ?? {} as WalletFilter
+	walletFilter.idUser = auth.idUser
 
-	const wallets = readFromStorage(DatabaseKey.wallet) as Wallet[]
-	const walletsFiltered = filteredFunction(wallets, userFilter)
+	const response = await getApi<Wallet[]>({
+		controller: 'Wallet',
+		params: walletFilter
+	})
 	
-	return walletsFiltered
+	return response.data
 }
 
-export const getWallet = async (idWallet: number) => {
-	const wallet = getById(DatabaseKey.wallet, idWallet) as Wallet | undefined
-	if(!wallet) throw new Error('Wallet not found.')
-	return wallet
+export const getWallet = async (idWallet: string) => {
+	const response = await getApi<Wallet>({
+		controller: `Wallet/${idWallet}`
+	})
+
+	return response.data
 }
 
 export const editWallet = async (request: EditWalletRequest) => {
-	const database = readFromStorage(DatabaseKey.wallet) as Wallet[] | undefined
-
-	if(!database || !database.length) return false
-
-	const dataToEdit = database.find(d => d.id == request.id)
-	const newDatabase = database.filter(d => d.id != request.id)
-
-	if(!dataToEdit) return false
-
-	const dataEdited: Wallet = {...dataToEdit, name: request.name, description: request.description, money: request.money}
-	newDatabase.push(dataEdited)
-
-	writeToStorage(DatabaseKey.wallet, newDatabase)
+	const auth = getAuthFromStorage()
 	
-	return true
+	const wallet: Wallet = {
+		id: request.id,
+		idUser: auth.idUser,
+		money: request.money,
+		description: request.description,
+		name: request.name,
+		isActive: true,
+		lastUpdate: new Date()
+	}
+
+	const response = await putApi<number>({
+		url: 'Wallet',
+		data: wallet,
+	})
+
+	return response.data
 }

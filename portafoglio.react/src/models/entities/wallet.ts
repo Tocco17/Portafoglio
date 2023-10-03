@@ -1,7 +1,7 @@
 import { LogicDeleteEntity } from "./base-entity";
 
 export interface Wallet extends LogicDeleteEntity {
-	idUser: number
+	idUser: string
 	name: string
 	description?: string
 

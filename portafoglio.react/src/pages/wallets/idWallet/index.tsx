@@ -7,7 +7,7 @@ import { CloseButton } from "../../../components/elements/close-button"
 import { moneyToString } from "../../../utils/format"
 
 export const walletPageLoader = async ({ params }: LoaderFunctionArgs) => {
-	const idWallet = params.idWallet as number | undefined
+	const idWallet = params.idWallet as string | undefined
 
 	if (!idWallet) return redirect(route.wallets)
 

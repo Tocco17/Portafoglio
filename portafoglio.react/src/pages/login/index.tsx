@@ -46,12 +46,12 @@ export const loginSubmitAction = async ({ request }: ActionFunctionArgs) => {
 
 	if (!username || !password) throw new Error('username or password not inserted.')
 
-	const user = await loginUser(username, password)
+	const idUser = await loginUser(username, password)
 
-	if (!user || !user?.id) throw new Error('User not found.')
+	if (!idUser) throw new Error('User not found.')
 
 	const loggedUser: LoggedUser = {
-		idUser: user.id
+		idUser: idUser
 	}
 
 	writeToStorage(StorageKey.auth, loggedUser)

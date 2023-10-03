@@ -1,4 +1,4 @@
 export interface WalletFilter {
-	idUser?: number
+	idUser?: string
 	name?: string
 }

@@ -8,7 +8,7 @@ import { TextInput } from "../../../../components/forms/text-input"
 import { MoneyInput } from "../../../../components/forms/money-input"
 
 export const editWalletLoader = async ({ params }: LoaderFunctionArgs) => {
-	const idWallet = params.idWallet as number | undefined
+	const idWallet = params.idWallet as string | undefined
 
 	if (!idWallet) return redirect(route.wallets)
 
@@ -75,7 +75,7 @@ export const editWalletAction = async ({ request }: ActionFunctionArgs) => {
 	const name = formData.get("name") as string
 	const description = formData.get("description") as string | undefined
 	const money = parseFloat(formData.get("money") as string)
-	const id = parseInt(formData.get("id") as string)
+	const id = formData.get("id") as string
 
 	const moneyInCents = Math.trunc(money * 100)
 
