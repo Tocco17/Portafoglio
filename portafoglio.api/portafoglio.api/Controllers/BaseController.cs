@@ -62,14 +62,14 @@ public abstract class BaseController<TEntity, TFilter> : ControllerBase
 	}
 
 	[HttpPost]
-	public async virtual Task<ActionResult<Guid>> Post(TEntity entity)
+	public async virtual Task<ActionResult<Guid>> Post([FromBody] TEntity entity)
 	{
 		var guid = await _dbRepo.AddAsync(entity);
 		return Ok(guid);
 	}
 
 	[HttpPost("multiple")]
-	public async virtual Task<ActionResult<IEnumerable<Guid>>> Post(IEnumerable<TEntity> entities)
+	public async virtual Task<ActionResult<IEnumerable<Guid>>> Post([FromBody] IEnumerable<TEntity> entities)
 	{
 		var guids = await _dbRepo.AddAsync(entities);
 		return Ok(guids);
@@ -77,14 +77,14 @@ public abstract class BaseController<TEntity, TFilter> : ControllerBase
 
 
 	[HttpPut]
-	public async virtual Task<ActionResult<int>> Put(TEntity entity)
+	public async virtual Task<ActionResult<int>> Put([FromBody] TEntity entity)
 	{
 		var count = await _dbRepo.UpdateAsync(entity);
 		return count == 1 ? Ok(count) : NotFound();
 	}
 
 	[HttpPut("multiple")]
-	public async virtual Task<ActionResult<int>> Put(IEnumerable<TEntity> entities)
+	public async virtual Task<ActionResult<int>> Put([FromBody] IEnumerable<TEntity> entities)
 	{
 		var count = await _dbRepo.UpdateAsync(entities);
 		return count == 1 ? Ok(count) : NotFound();

@@ -5,6 +5,7 @@ using portafoglio.api.Contextes;
 using portafoglio.api.Models.Entities;
 using portafoglio.api.Models.Filters;
 using portafoglio.api.Repositories;
+using portafoglio.api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -50,6 +51,15 @@ builder.Services.AddScoped<ILogicDeleteRepository<EarningSuddivision, EarningSud
 builder.Services.AddScoped<ILogicDeleteRepository<Label, LabelFilter>, LabelRepository>();
 builder.Services.AddScoped<ILogicDeleteRepository<User, UserFilter>, UserRepository>();
 builder.Services.AddScoped<ILogicDeleteRepository<Wallet, WalletFilter>, WalletRepository>();
+
+builder.Services.AddScoped<EarningRepository>();
+builder.Services.AddScoped<EarningSuddivisionRepository>();
+builder.Services.AddScoped<LabelRepository>();
+builder.Services.AddScoped<TransactionRepository>();
+builder.Services.AddScoped<UserRepository>();
+builder.Services.AddScoped<WalletRepository>();
+
+builder.Services.AddScoped<UserService>();
 
 var app = builder.Build();
 
