@@ -17,7 +17,7 @@ public class Label : LogicDeleteEntity
 
 
 	[InverseProperty(nameof(FatherLabel))]
-	public ICollection<Label>? FatherLabels { get; set; }
+	public ICollection<Label>? ChildrenLabels { get; set; }
 
 	[InverseProperty("Label")]
 	public ICollection<Transaction>? Transactions { get; set; }

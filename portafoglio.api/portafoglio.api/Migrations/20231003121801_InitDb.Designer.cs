@@ -11,8 +11,8 @@ using portafoglio.api.Contextes;
 namespace portafoglio.api.Migrations
 {
     [DbContext(typeof(PortafoglioDbContext))]
-    [Migration("20230929103317_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20231003121801_InitDb")]
+    partial class InitDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -220,7 +220,7 @@ namespace portafoglio.api.Migrations
             modelBuilder.Entity("portafoglio.api.Models.Entities.Label", b =>
                 {
                     b.HasOne("portafoglio.api.Models.Entities.Label", "FatherLabel")
-                        .WithMany("FatherLabels")
+                        .WithMany("ChildrenLabels")
                         .HasForeignKey("IdFatherLabel");
 
                     b.Navigation("FatherLabel");
@@ -258,7 +258,7 @@ namespace portafoglio.api.Migrations
 
             modelBuilder.Entity("portafoglio.api.Models.Entities.Label", b =>
                 {
-                    b.Navigation("FatherLabels");
+                    b.Navigation("ChildrenLabels");
 
                     b.Navigation("Transactions");
                 });
