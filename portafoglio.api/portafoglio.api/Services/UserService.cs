@@ -1,17 +1,25 @@
 ﻿using portafoglio.api.Models.Entities;
+using portafoglio.api.Models.Filters;
 using portafoglio.api.Repositories;
 
 namespace portafoglio.api.Services;
 
 public class UserService
 {
-	private readonly EarningRepository _earningRepos;
-	private readonly EarningSuddivisionRepository _earningSuddivisionRepos;
-	private readonly LabelRepository _labelRepos;
-	private readonly UserRepository _userRepos;
-	private readonly WalletRepository _walletRepos;
 
-	public UserService(EarningRepository earningRepos, EarningSuddivisionRepository earningSuddivisionRepos, LabelRepository labelRepos, UserRepository userRepos, WalletRepository walletRepos)
+
+	private readonly IRepository<Earning, EarningFilter> _earningRepos;
+	private readonly IRepository<EarningSuddivision, EarningSuddivisionFilter> _earningSuddivisionRepos;
+	private readonly IRepository<Label, LabelFilter> _labelRepos;
+	private readonly IRepository<User, UserFilter> _userRepos;
+	private readonly IRepository<Wallet, WalletFilter> _walletRepos;
+
+	public UserService(
+		IRepository<Earning, EarningFilter> earningRepos,
+		IRepository<EarningSuddivision, EarningSuddivisionFilter> earningSuddivisionRepos,
+		IRepository<Label, LabelFilter> labelRepos,
+		IRepository<User, UserFilter> userRepos,
+		IRepository<Wallet, WalletFilter> walletRepos)
 	{
 		_earningRepos = earningRepos;
 		_earningSuddivisionRepos = earningSuddivisionRepos;

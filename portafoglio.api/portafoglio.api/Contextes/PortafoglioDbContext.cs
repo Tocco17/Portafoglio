@@ -9,11 +9,11 @@ public class PortafoglioDbContext : DbContext
 	{
 	}
 
-	public DbSet<Earning> Earnings { get; set; } = null!;
-	public DbSet<EarningSuddivision> EarningSuddivisions { get; set; } = null!;
-	public DbSet<Label> Labels { get; set; } = null!;
-	public DbSet<Transaction> Transactions { get; set; } = null!;
-	public DbSet<User> Users { get; set; } = null!;
-	public DbSet<Wallet> Wallets { get; set; } = null!;
+	public virtual DbSet<Earning> Earnings { get; set; } = null!;
+	public virtual DbSet<EarningSuddivision> EarningSuddivisions { get; set; } = null!;
+	public virtual DbSet<Label> Labels { get; set; } = null!;
+	public virtual DbSet<Transaction> Transactions { get; set; } = null!;
+	public virtual DbSet<User> Users { get; set; } = null!;
+	public virtual DbSet<Wallet> Wallets { get; set; } = null!;
 
 }
