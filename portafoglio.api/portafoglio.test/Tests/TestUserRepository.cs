@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using portafoglio.api.Contextes;
 using portafoglio.api.Models.Entities;
 using portafoglio.api.Repositories;
-using portafoglio.test.Repository;
 
 namespace portafoglio.test.Tests;
 public class TestUserRepository
