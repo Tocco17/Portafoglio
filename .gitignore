@@ -10,3 +10,5 @@ portafoglio.api/portafoglio.api/bin
 *.sqlite-wal
 *.sqlite-shm
 *.sqlite
+portafoglio.api/portafoglio.test/obj
+portafoglio.api/portafoglio.test/bin
