@@ -17,6 +17,6 @@ public class UserFilter : BaseLogicDeleteFilter<User>
 		if(!string.IsNullOrEmpty(Password))
 			query = query.Where(x =>  x.Password == Password);
 
-		return query;
+		return base.GetOptionsFilterQuery(query);
 	}
 }
