@@ -15,6 +15,9 @@ public class Label : LogicDeleteEntity
 	[ForeignKey(nameof(IdFatherLabel))]
 	public Label? FatherLabel { get; set; }
 
+	[ForeignKey(nameof(IdEarningSuddivision))]
+	public EarningSuddivision? EarningSuddivision { get; set; }
+
 
 	[InverseProperty(nameof(FatherLabel))]
 	public ICollection<Label>? ChildrenLabels { get; set; }
