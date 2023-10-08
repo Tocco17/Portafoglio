@@ -13,6 +13,7 @@ namespace portafoglio.test.Tests;
 public abstract class BaseTest
 {
 	protected PortafoglioDbContext _dbContext;
+
 	protected EarningRepository _earningsRepos;
 	protected EarningSuddivisionRepository _earningSuddivisionsRepos;
 	protected LabelRepository _labelsRepos;
@@ -21,16 +22,22 @@ public abstract class BaseTest
 	protected WalletRepository _walletsRepos;
 
 	[SetUp]
-	public virtual async Task Setup()
+	public virtual void Setup()
 	{
 		InitializeDbContext();
-		await InitializeEarningsRepos();
-		await InitializeEarningSuddivisionsRepos();
-		await InitializeLabelsRepos();
-		await InitializeTransactionsRepos();
-		await InitializeUsersRepos();
-		await InitializeWalletsRepos();
 
+		_earningsRepos = new EarningRepository(_dbContext);
+		_earningSuddivisionsRepos = new EarningSuddivisionRepository(_dbContext);
+		_labelsRepos = new LabelRepository(_dbContext);
+		_transactionsRepos = new TransactionRepository(_dbContext);
+		_usersRepos = new UserRepository(_dbContext);
+		_walletsRepos = new WalletRepository(_dbContext);
+	}
+
+	[TearDown]
+	public virtual void TearDown()
+	{
+		_dbContext.Dispose();
 	}
 
 	private void InitializeDbContext()
@@ -44,33 +51,4 @@ public abstract class BaseTest
 		_dbContext.Database.EnsureCreated();
 	}
 
-	private async Task InitializeEarningsRepos()
-	{
-		_earningsRepos = new EarningRepository(_dbContext);
-	}
-
-	private async Task InitializeEarningSuddivisionsRepos()
-	{
-		_earningSuddivisionsRepos = new EarningSuddivisionRepository(_dbContext);
-	}
-
-	private async Task InitializeLabelsRepos()
-	{
-		_labelsRepos = new LabelRepository(_dbContext);
-	}
-
-	private async Task InitializeTransactionsRepos()
-	{
-		_transactionsRepos = new TransactionRepository(_dbContext);
-	}
-
-	private async Task InitializeUsersRepos()
-	{
-		_usersRepos = new UserRepository(_dbContext);
-	}
-
-	private async Task InitializeWalletsRepos()
-	{
-		_walletsRepos = new WalletRepository(_dbContext);
-	}
 }
