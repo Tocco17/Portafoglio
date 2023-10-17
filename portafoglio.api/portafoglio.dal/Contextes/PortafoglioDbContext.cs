@@ -27,7 +27,7 @@ public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<Portafogli
 	{
 		IConfigurationRoot configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile(@Directory.GetCurrentDirectory() + "/../portafoglio.api/appsettings.json").Build();
 		var builder = new DbContextOptionsBuilder<PortafoglioDbContext>();
-		var connectionString = configuration.GetConnectionString("DatabaseConnection");
+		var connectionString = configuration.GetConnectionString("DefaultConnection");
 		builder.UseSqlite(connectionString);
 		return new PortafoglioDbContext(builder.Options);
 	}

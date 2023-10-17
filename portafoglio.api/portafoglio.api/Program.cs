@@ -6,6 +6,7 @@ using portafoglio.bl.Entities;
 using portafoglio.api.Models.Filters;
 using portafoglio.api.Repositories;
 using portafoglio.api.Services;
+using portafoglio.dal.Seeder;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,21 +32,20 @@ builder.Services.AddControllers()
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//builder.Services
-//	.AddDbContext<PortafoglioDbContext>(options =>
-//	options
-//		.UseSqlite(
-//			Environment.GetEnvironmentVariable("DefaultConnection") ??
-//			builder.Configuration.GetConnectionString("DefaultConnection")
-//		)
-//	);
+builder.Services
+	.AddDbContext<PortafoglioDbContext>(options =>
+	options
+		.UseSqlite(
+			Environment.GetEnvironmentVariable("DefaultConnection") ??
+			builder.Configuration.GetConnectionString("DefaultConnection")
+		)
+	);
 
 builder.Services.AddDbContext<PortafoglioDbContext>(
 	options =>
 		options.UseSqlite(
 			Environment.GetEnvironmentVariable("DefaultConnection") ??
-				builder.Configuration.GetConnectionString("DefaultConnection"),
-			x => x.MigrationsAssembly("portafoglio.migrations")));
+				builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<IRepository<Earning, EarningFilter>, EarningRepository>();
 builder.Services.AddScoped<IRepository<EarningSuddivision, EarningSuddivisionFilter>, EarningSuddivisionRepository>();
@@ -76,6 +76,20 @@ if (app.Environment.IsDevelopment())
 	app.UseSwagger();
 	app.UseSwaggerUI();
 }
+
+//using (var scope = app.Services.CreateScope())
+//{
+//	var services = scope.ServiceProvider;
+//	try
+//	{
+//		var context = services.GetRequiredService<PortafoglioDbContext>();
+//		DataSeeder.Initialize(context);
+//	}
+//	catch (Exception)
+//	{
+//		Console.WriteLine("An error occurred while seeding the database.");
+//	}
+//}
 
 app.UseHttpsRedirection();
 
