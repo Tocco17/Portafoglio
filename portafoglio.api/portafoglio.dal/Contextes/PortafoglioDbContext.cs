@@ -19,3 +19,16 @@ public class PortafoglioDbContext : DbContext
 	public virtual DbSet<Wallet> Wallets { get; set; } = null!;
 
 }
+
+
+public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<PortafoglioDbContext>
+{
+	public PortafoglioDbContext CreateDbContext(string[] args)
+	{
+		IConfigurationRoot configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile(@Directory.GetCurrentDirectory() + "/../portafoglio.api/appsettings.json").Build();
+		var builder = new DbContextOptionsBuilder<PortafoglioDbContext>();
+		var connectionString = configuration.GetConnectionString("DatabaseConnection");
+		builder.UseSqlite(connectionString);
+		return new PortafoglioDbContext(builder.Options);
+	}
+}
