@@ -1,14 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace portafoglio.api.Models.Entities;
+namespace portafoglio.bl.Entities;
 
 [PrimaryKey(nameof(Id))]
 public abstract class BaseEntity
 {
-	public Guid Id { get; set; }
+    public Guid Id { get; set; }
 }
 
 public abstract class LogicDeleteEntity : BaseEntity
 {
-	public bool IsActive { get; set; } = true;
+    public bool IsActive { get; set; } = true;
 }

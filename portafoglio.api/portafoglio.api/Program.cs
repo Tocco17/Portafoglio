@@ -1,8 +1,8 @@
 using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using portafoglio.api.Contextes;
-using portafoglio.api.Models.Entities;
+using portafoglio.dal.Contextes;
+using portafoglio.bl.Entities;
 using portafoglio.api.Models.Filters;
 using portafoglio.api.Repositories;
 using portafoglio.api.Services;
@@ -31,14 +31,21 @@ builder.Services.AddControllers()
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services
-	.AddDbContext<PortafoglioDbContext>(options =>
-	options
-		.UseSqlite(
+//builder.Services
+//	.AddDbContext<PortafoglioDbContext>(options =>
+//	options
+//		.UseSqlite(
+//			Environment.GetEnvironmentVariable("DefaultConnection") ??
+//			builder.Configuration.GetConnectionString("DefaultConnection")
+//		)
+//	);
+
+builder.Services.AddDbContext<PortafoglioDbContext>(
+	options =>
+		options.UseSqlite(
 			Environment.GetEnvironmentVariable("DefaultConnection") ??
-			builder.Configuration.GetConnectionString("DefaultConnection")
-		)
-	);
+				builder.Configuration.GetConnectionString("DefaultConnection"),
+			x => x.MigrationsAssembly("portafoglio.migrations")));
 
 builder.Services.AddScoped<IRepository<Earning, EarningFilter>, EarningRepository>();
 builder.Services.AddScoped<IRepository<EarningSuddivision, EarningSuddivisionFilter>, EarningSuddivisionRepository>();

@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using portafoglio.api.Models.Entities;
+using portafoglio.bl.Entities;
 
 namespace portafoglio.api.Models.Filters;
 

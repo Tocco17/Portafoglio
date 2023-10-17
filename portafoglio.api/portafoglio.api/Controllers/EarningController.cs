@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using portafoglio.api.Models.Entities;
 using portafoglio.api.Models.Filters;
 using portafoglio.api.Repositories;
+using portafoglio.bl.Entities;
 
 namespace portafoglio.api.Controllers;
 

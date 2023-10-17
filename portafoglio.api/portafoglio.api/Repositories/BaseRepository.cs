@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using portafoglio.api.Contextes;
-using portafoglio.api.Models.Entities;
+using portafoglio.dal.Contextes;
 using portafoglio.api.Models.Filters;
+using portafoglio.bl.Entities;
 
 namespace portafoglio.api.Repositories;
 

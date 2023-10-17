@@ -12,3 +12,7 @@ portafoglio.api/portafoglio.api/bin
 *.sqlite
 portafoglio.api/portafoglio.test/obj
 portafoglio.api/portafoglio.test/bin
+portafoglio.api/portafoglio.bl/bin
+portafoglio.api/portafoglio.bl/obj
+portafoglio.api/portafoglio.dal/bin
+portafoglio.api/portafoglio.dal/obj

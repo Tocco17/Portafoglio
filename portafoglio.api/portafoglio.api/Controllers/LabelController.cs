@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using portafoglio.api.Models.Entities;
+using portafoglio.bl.Entities;
 using portafoglio.api.Models.Filters;
 using portafoglio.api.Repositories;
 
