@@ -77,19 +77,19 @@ if (app.Environment.IsDevelopment())
 	app.UseSwaggerUI();
 }
 
-//using (var scope = app.Services.CreateScope())
-//{
-//	var services = scope.ServiceProvider;
-//	try
-//	{
-//		var context = services.GetRequiredService<PortafoglioDbContext>();
-//		DataSeeder.Initialize(context);
-//	}
-//	catch (Exception)
-//	{
-//		Console.WriteLine("An error occurred while seeding the database.");
-//	}
-//}
+using (var scope = app.Services.CreateScope())
+{
+	var services = scope.ServiceProvider;
+	try
+	{
+		var context = services.GetRequiredService<PortafoglioDbContext>();
+		DataSeeder.Initialize(context);
+	}
+	catch (Exception)
+	{
+		Console.WriteLine("An error occurred while seeding the database.");
+	}
+}
 
 app.UseHttpsRedirection();
 
