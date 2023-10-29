@@ -11,8 +11,8 @@ using portafoglio.dal.Contextes;
 namespace portafoglio.dal.Migrations
 {
     [DbContext(typeof(PortafoglioDbContext))]
-    [Migration("20231017131734_Initial")]
-    partial class Initial
+    [Migration("20231029143446_InitDb")]
+    partial class InitDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -149,9 +149,6 @@ namespace portafoglio.dal.Migrations
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("TEXT");
-
-                    b.Property<bool>("ProvaBool")
-                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Username")
                         .IsRequired()

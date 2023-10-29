@@ -12,6 +12,14 @@ public class DataSeeder
 {
 	public static void Initialize(PortafoglioDbContext context)
 	{
+		FirstUser(context);
+		//SecondUser(context);
+
+		context.SaveChanges();
+	}
+
+	public static void FirstUser(PortafoglioDbContext context)
+	{
 		var user = new User
 		{
 			Id = Guid.NewGuid(),
@@ -59,7 +67,7 @@ public class DataSeeder
 		};
 
 		var labels = earingSuddivisions
-			.Select(e =>  
+			.Select(e =>
 				new Label
 				{
 					Id = Guid.NewGuid(),
@@ -96,7 +104,93 @@ public class DataSeeder
 		context.Earnings.Add(earning);
 		context.Labels.AddRange(labels);
 		context.Wallets.Add(wallet);
+	}
 
-		context.SaveChanges();
+	public static void SecondUser(PortafoglioDbContext context)
+	{
+		var user = new User
+		{
+			Id = Guid.NewGuid(),
+			Username = "piero",
+			Password = "Drowssap1"
+		};
+
+		var earingSuddivisions = new List<EarningSuddivision>
+		{
+			new EarningSuddivision
+			{
+				Id = Guid.NewGuid(),
+				IdUser = user.Id,
+				IsActive = true,
+				Name = "Necessaries",
+				Percentage = 50,
+				Description = "All the needed payments"
+			},
+			new EarningSuddivision
+			{
+				Id = Guid.NewGuid(),
+				IdUser = user.Id,
+				IsActive = true,
+				Name = "Fun",
+				Percentage = 30,
+				Description = "Fun payments"
+			},
+			new EarningSuddivision
+			{
+				Id = Guid.NewGuid(),
+				IdUser = user.Id,
+				IsActive = true,
+				Name = "Savings",
+				Percentage = 20,
+				Description = "Money saved"
+			},
+		};
+
+		var earning = new Earning
+		{
+			Id = Guid.NewGuid(),
+			IdUser = user.Id,
+			Value = 150000,
+			Date = DateTime.Now,
+		};
+
+		var labels = earingSuddivisions
+			.Select(e =>
+				new Label
+				{
+					Id = Guid.NewGuid(),
+					IdEarningSuddivision = e.Id,
+					Name = e.Name,
+					Description = e.Description,
+					IsActive = e.IsActive,
+				})
+			.ToList();
+
+		var wallet = new Wallet
+		{
+			Id = Guid.NewGuid(),
+			IdUser = user.Id,
+			IsActive = true,
+			LastUpdate = DateTime.Now,
+			Money = 150000,
+			Name = "Conto",
+			Description = "Generic conto"
+		};
+
+		var isDbPopulated =
+			context.Users.Any() ||
+			context.EarningSuddivisions.Any() ||
+			context.Earnings.Any() ||
+			context.Labels.Any() ||
+			context.Wallets.Any();
+
+		if (isDbPopulated)
+			return;
+
+		context.Users.Add(user);
+		context.EarningSuddivisions.AddRange(earingSuddivisions);
+		context.Earnings.Add(earning);
+		context.Labels.AddRange(labels);
+		context.Wallets.Add(wallet);
 	}
 }
