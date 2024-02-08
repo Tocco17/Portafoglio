@@ -39,6 +39,8 @@ export const Login = () => {
 }
 
 export const loginSubmitAction = async ({ request }: ActionFunctionArgs) => {
+	console.log('action')
+	
 	const formData = await request.formData()
 
 	const username = formData.get("username") as string

@@ -2,7 +2,7 @@ import { LoggedUser } from "../models/dtos/logged-user"
 import { decode, encode } from "./serialize"
 
 export enum StorageKey {
-	auth = 'auth',
+	auth = 'portafoglio-auth',
 }
 
 export const writeToStorage = (key: string, object: any) => {

@@ -15,21 +15,17 @@ export const createUser = async (user: User) => {
 }
 
 export const loginUser = async (username: string, password: string) => {
-	const filter: UserFilter = {
-		username,
-		password,
-	}
-
 	const response = await getApi<string>({
 		controller: 'User/Login',
-		params: filter
+		params: {
+			username,
+			password,
+		}
 	})
 
-	const loggedUser: LoggedUser = {
-		idUser: response.data
-	}
-
-	writeToStorage(StorageKey.auth, loggedUser)
+	console.log('controller')
+	console.log(response)
+	console.log(response.data)
 	
 	return response.data
 }

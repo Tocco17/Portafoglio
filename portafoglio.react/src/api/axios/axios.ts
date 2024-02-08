@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const appVersion = '1'
 const portNumber = 7114
-const baseUrl = `http://localhost:${portNumber}/api`
+const baseUrl = `https://localhost:${portNumber}/api`
 
 export const getAppVersion = (): string => appVersion
 

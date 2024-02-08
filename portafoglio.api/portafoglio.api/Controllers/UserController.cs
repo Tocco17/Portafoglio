@@ -18,12 +18,12 @@ public class UserController : BaseLogicDeleteController<User, UserFilter>
 	}
 
 	[HttpGet("Login")]
-	public async Task<ActionResult<Guid>> Login([FromBody] User user)
+	public async Task<ActionResult<Guid>> Login([FromQuery] string username, [FromQuery] string password)
 	{
 		var filter = new UserFilter
 		{
-			Username = user.Username,
-			Password = user.Password,
+			Username = username,
+			Password = password,
 		};
 
 		var userFromDb = await _dbRepo.GetSingleOrDefaultAsync(filter);
